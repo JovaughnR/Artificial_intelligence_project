@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Sign Up Form</title>
+		<link rel="stylesheet" href="./form.css" />
+		<link rel="shortcut icon" href="./icons/logo.jpeg" type="image/x-icon" />
+		<script defer src="../public/scripts/form_script.js"></script>
+		<script
+			src="https://kit.fontawesome.com/77487f3db9.js"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<body>
+		<header class="navigation-bar">
+			<h1>Academic Probation Alert System</h1>
+			<nav>
+				<a href="./login.html">
+					<i class="fa-solid fa-house"> </i>
+				</a>
+			</nav>
+		</header>
+
+		<main>
+			<section class="description">
+				<h2>Why Join Us?</h2>
+				<p id="p1"></p>
+				<p id="p2"></p>
+				<p id="p3"></p>
+			</section>
+
+			<form id="uploadForm">
+				<fieldset class="field">
+					<legend>
+						<img
+							src="./icons/writing.png"
+							alt="sign-up-icon"
+							id="sign-up-icon"
+						/>
+					</legend>
+					<!-- Name and Identification -->
+					<div class="input-group">
+						<div class="inline">
+							<label for="firstName">First Name</label>
+							<input type="text" name="firstName" id="firstName" required />
+						</div>
+						<div class="inline">
+							<label for="lastName">Last Name</label>
+							<input type="text" name="lastName" id="lastName" required />
+						</div>
+					</div>
+
+					<div class="input-group">
+						<div class="inline">
+							<label for="userID">Identification Number</label>
+							<input type="text" name="userID" id="userID" required />
+						</div>
+						<div class="inline">
+							<label for="email">Email</label>
+							<input type="email" name="email" id="email" required />
+						</div>
+					</div>
+
+					<!-- Account Type -->
+					<div class="input-group">
+						<label for="account_type">Account Type</label>
+						<select name="account_type" id="account_type" required>
+							<option value="student">Student</option>
+							<option value="staff">Staff</option>
+						</select>
+					</div>
+
+					<!-- Conditional Fields -->
+					<div id="student-fields">
+						<div class="input-group">
+							<label for="programme">Programme</label>
+							<input type="text" name="programme" id="programme" required />
+						</div>
+					</div>
+					<div class="input-group" id="staff-fields" style="display: none">
+						<label for="staff_type">Staff Type</label>
+						<input type="text" name="staff_type" id="staff_type" />
+						<label for="school">School</label>
+						<input type="text" name="school" id="school" />
+					</div>
+
+					<!-- Password -->
+					<div class="input-group">
+						<div class="inline">
+							<label for="password">Password</label>
+							<input type="password" name="password" id="password" required />
+						</div>
+						<div class="inline">
+							<label for="confirm_password">Confirm Password</label>
+							<input
+								type="password"
+								name="confirm_password"
+								id="confirm_password"
+								required
+							/>
+						</div>
+					</div>
+					<div id="error-message" class="error-message">
+						Passwords don't match.
+					</div>
+					<button type="submit" id="submitBtn">Create Account</button>
+				</fieldset>
+			</form>
+		</main>
+		<footer id="contact">
+			<p>
+				Contact us at
+				<a href="mailto:support@utechjamaica.edu">support@utechjamaica.edu</a>
+			</p>
+			<p>&copy; 2024 University of Technology, Jamaica</p>
+		</footer>
+	</body>
+</html>

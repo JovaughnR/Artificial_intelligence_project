@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Login Page</title>
+		<link rel="stylesheet" href="./login.css" />
+		<link rel="icon" href="./icons/logo.jpeg" type="image/x-icon" />
+		<link rel="shortcut icon" href="./icons/logo.jpeg" type="image/x-icon" />
+		<script
+			src="https://kit.fontawesome.com/77487f3db9.js"
+			crossorigin="anonymous"
+		></script>
+		<script defer src="../public/scripts/login_script.js"></script>
+	</head>
+	<body>
+		<header class="navigation-bar">
+			<img src="./icons/tech_logo.jpeg" alt="Tech Logo" class="logo" />
+			<nav>
+				<ul>
+					<li><a href="#home">Home</a></li>
+					<li><a href="./about.html">About</a></li>
+				</ul>
+			</nav>
+		</header>
+		<form id="user-login">
+			<fieldset class="field">
+				<legend>
+					<i class="fa-solid fa-user icon"></i>
+				</legend>
+				<div>
+					<label for="userID">Identification Number</label>
+					<i class="fa-solid fa-id-card icon"></i>
+					<input type="text" name="userID" id="userID" required />
+				</div>
+				<div class="inline">
+					<label for="password">Password</label>
+					<i class="fa-solid fa-lock icon"></i>
+					<input type="password" name="password" id="password" required />
+				</div>
+				<div
+					id="error-message"
+					style="
+						color: rgb(255, 0, 0);
+						display: none;
+						font-size: 12px;
+						margin-bottom: 10px;
+					"
+				>
+					&nbsp;Incorrect Identification Number or Password.
+				</div>
+				<button type="submit" id="submit">Login</button>
+
+				<div class="inline new-user-group">
+					<div>
+						<i class="fa-solid fa-person-circle-plus icon"></i>
+						<a href="./form.html">New User</a>
+					</div>
+					<div>
+						<i class="fa-solid fa-unlock icon"></i>
+						<a href="#">Forget Password</a>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		<footer>
+			<p>
+				&copy; 2024 University of Technology Artificial Intelligence Students.
+				All rights reserved.
+			</p>
+		</footer>
+	</body>
+</html>

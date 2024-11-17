@@ -1,0 +1,177 @@
+/* General Reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	font-family: Arial, sans-serif;
+	background-color: #f8f9fa;
+	color: #333;
+	line-height: 1.6;
+}
+
+/* Header Styles */
+/* header {
+	background: #007bff;
+	color: #fff;
+	padding: 1rem 0;
+	text-align: center;
+} */
+.navigation-bar {
+	background: #007bff;
+	color: #fff;
+	padding: 1rem 0;
+	text-align: center;
+}
+
+header h1 {
+	margin: 0;
+	font-size: 2rem;
+}
+
+a,
+i {
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+a:hover,
+i:hover {
+	color: #36dd08;
+}
+
+/* Main Form Section */
+main {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+}
+
+/* Description Section */
+.description {
+	margin: 5%;
+	width: 500px;
+	height: 500px;
+	max-width: 500px;
+	max-height: 500px;
+	text-align: center;
+	padding: 1.5rem;
+	background-color: #ffffff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	margin-bottom: 2rem;
+}
+
+.description h2 {
+	font-size: 1.8rem;
+	margin-bottom: 1rem;
+	color: #007bff;
+}
+
+.description p {
+	margin-bottom: 1rem;
+	line-height: 1.8;
+	color: #333;
+}
+
+/* Form Fieldset */
+.field {
+	width: 100%;
+	max-width: 600px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	background: #fff;
+	padding: 20px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+legend {
+	text-align: center;
+}
+
+legend > #sign-up-icon {
+	width: 40px;
+	height: 30px;
+}
+
+.input-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+	margin-bottom: 1rem;
+}
+
+.inline {
+	flex: 1;
+	min-width: 45%;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+button[type="submit"] {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+}
+
+button[type="submit"] {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+button[type="submit"]:hover {
+	background-color: #0056b3;
+}
+
+.error-message {
+	color: #dc3545;
+	font-size: 0.875rem;
+	margin-top: -10px;
+	margin-bottom: 10px;
+	display: none; /* Hidden by default */
+}
+
+/* Footer Styles */
+footer {
+	background-color: #343a40;
+	color: white;
+	text-align: center;
+	padding: 1rem 0;
+	width: 100%;
+	margin-bottom: 0;
+}
+
+footer a {
+	color: #007bff;
+	text-decoration: none;
+}
+
+footer a:hover {
+	text-decoration: underline;
+}
