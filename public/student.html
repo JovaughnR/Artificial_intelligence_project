@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Student Dashboard - Academic Probation Alert</title>
+		<link rel="stylesheet" href="student.css" />
+		<script defer src="scripts/student_script.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Student Dashboard - Academic Probation Alert System</h1>
+			<nav>
+				<ul class="nav-links">
+					<li><a id="viewRecords">View Records</a></li>
+					<li><a id="viewAllRecords">View All Records</a></li>
+					<li><a id="showCurrentGPA">Show Current GPA</a></li>
+				</ul>
+				<div class="user-profile">
+					<!-- <img src="profile-icon.png" alt="Profile" class="profile-icon" /> -->
+					<span class="user-name" id="studentName">studName</span>
+					<button id="logout">Logout</button>
+				</div>
+			</nav>
+		</header>
+		<main>
+			<section
+				class="records-portal"
+				id="records-section"
+				style="display: none"
+			>
+				<h2>View Your Academic Records</h2>
+				<form id="studentForm" class="data-entry-form">
+					<div class="form-group">
+						<label for="academicYear">Select Academic Year:</label>
+						<select id="academicYear" name="academicYear" required>
+							<option value="">Choose Year</option>
+							<option value="2022">2022</option>
+							<option value="2023">2023</option>
+							<option value="2024">2024</option>
+							<option value="2024">2025</option>
+						</select>
+					</div>
+					<button type="submit" id="records">View Records</button>
+				</form>
+				<button id="all-records">View All Records</button>
+				<button id="current-gpa">Show current GPA</button>
+			</section>
+
+			<section class="gpa-portal" id="gpa-section" style="display: none">
+				<h2>View Your GPA Standings</h2>
+				<form id="gpaForm" class="data-entry-form">
+					<div class="form-group">
+						<label for="gpaAcademicYear">Select Academic Year:</label>
+						<select id="gpaAcademicYear" name="gpaAcademicYear" required>
+							<option value="">Choose Year</option>
+							<option value="2022">2022</option>
+							<option value="2023">2023</option>
+							<option value="2024">2024</option>
+							<option value="2024">2025</option>
+						</select>
+					</div>
+					<button type="submit" id="GPAs">View GPAs</button>
+				</form>
+			</section>
+
+			<section id="resultsSection1" style="display: none">
+				<div class="close-section1" onclick="closeSection1()">&times;</div>
+				<table border="1" id="tableResult">
+					<caption>
+						Your Academic Performance Summary
+					</caption>
+					<tr>
+						<th>Module Code</th>
+						<th>Module</th>
+						<th>Semester</th>
+						<th>Grade Point</th>
+					</tr>
+					<tr></tr>
+				</table>
+			</section>
+			<section id="resultsSection2" style="display: none">
+				<div class="close-section2" onclick="closeSection2()">&times;</div>
+				<table border="1" id="gpa-table">
+					<caption>
+						Academic Summary
+					</caption>
+					<tr>
+						<th>GPA Semester 1</th>
+						<th>GPA Semester 2</th>
+						<th>Cumulative GPA</th>
+						<th>Academic Status</th>
+					</tr>
+				</table>
+			</section>
+
+			<section id="responses">
+				<span>
+					<img src="./chat-bot-icon.jpg" alt="" id="chat-icon" />
+					<div class="response-area">
+						<p id="p1"></p>
+					</div>
+				</span>
+				<div class="user-response-area">
+					<div class="user-input-area">
+						<input type="text" id="user-input" placeholder="Enter Query Here" />
+						<button id="query" class="query-btn">&#x21E7;</button>
+						<!-- Up Arrow Symbol -->
+					</div>
+				</div>
+			</section>
+
+			<div id="chat_bot">
+				<img id="chat-bot" src="./chat-bot-icon.jpg" alt="Chat Bot" />
+			</div>
+		</main>
+
+		<footer id="contact">
+			<p>
+				Contact us at
+				<a href="mailto:support@utechjamaica.edu">support@utechjamaica.edu</a>
+			</p>
+			<p>&copy; 2024 University of Technology, Jamaica</p>
+		</footer>
+	</body>
+</html>

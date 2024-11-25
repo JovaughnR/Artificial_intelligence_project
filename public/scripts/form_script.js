@@ -124,6 +124,6 @@ function generateDescription(element, description) {
 				clearInterval(id);
 				resolve();
 			}
-		}, 15);
+		}, 5);
 	});
 }

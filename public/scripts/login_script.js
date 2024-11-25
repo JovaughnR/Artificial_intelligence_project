@@ -1,39 +1,36 @@
 const userLogin = document.getElementById("user-login");
-
 userLogin.addEventListener("submit", authenticateUser);
 
 async function authenticateUser(event) {
 	event.preventDefault();
 	const formData = new FormData(event.target);
 
-	const credentials = {
+	const credential = {
 		userID: formData.get("userID"),
 		password: formData.get("password"),
 	};
 
 	try {
-		let data = {
+		const response = await fetch("http://127.0.0.1:3001/login", {
 			method: "POST",
-			body: JSON.stringify(credentials),
+			body: JSON.stringify(credential),
 			headers: { "Content-Type": "application/json" },
-		};
-		let response = await fetch("http://127.0.0.1:3001/login", data);
-
-		if (response.status == 401) {
-			const errorMsgHolder = document.getElementById("error-message");
-			errorMsgHolder.style.display = "block";
-			return;
-		}
+			credentials: "include",
+		});
 
 		if (response.ok) {
-			let info = await response.json();
-			data = { method: "GET", body: info["key"] };
-			response = await fetch("http://127.0.0.1:3001/", data);
-			if (response.ok) {
-				window.location.href = "/public/index.html";
-			}
+			const data = await response.json();
+			if (data["type"] === "student")
+				window.location.href = "/public/student.html";
+			else if (data["type"] === "staff")
+				window.location.href = "/public/staff.html";
+			else if (data["type"] === "admin")
+				window.location.href = "/public/admin.html";
+			return;
 		}
+		document.getElementById("error-message").style.display = "block";
 	} catch (error) {
-		console.log("Error from login script:", error);
+		alert("Errro while logging");
+		console.error("Error during login:", error);
 	}
 }

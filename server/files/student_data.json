@@ -1,0 +1,159 @@
+{
+	"intents": [
+		{
+			"tag": "greeting",
+			"patterns": ["Hi", "Hello", "Hey", "Good morning", "Good evening"],
+			"responses": [
+				"Hello! How can I assist you with your academic records today?",
+				"Hi there! What do you need help with?",
+				"Greetings! Let me know how I can help you today."
+			]
+		},
+		{
+			"tag": "farewell",
+			"patterns": ["Bye", "Goodbye", "See you", "I am done", "End chat"],
+			"responses": [
+				"Goodbye! Feel free to return if you need further assistance.",
+				"Take care! Let me know if you need help again.",
+				"See you next time! Have a great day."
+			]
+		},
+		{
+			"tag": "view_academic_records",
+			"patterns": [
+				"How do I view my academic records?",
+				"Show my academic records",
+				"I want to see my grades",
+				"Can I view records for 2023?",
+				"Where can I find my semester grades?",
+				"Can I view records for multiple years?"
+			],
+			"responses": [
+				"To view your academic records, go to the 'View Your Academic Records' section, select the academic year from the dropdown menu, and click 'View Records'.",
+				"You can view records for different years by selecting the academic year in the dropdown.",
+				"Your semester grades and cumulative GPA are included in the academic records section."
+			]
+		},
+		{
+			"tag": "academic_status",
+			"patterns": [
+				"What is my academic status?",
+				"Am I on academic probation?",
+				"Check if I am in good standing",
+				"What does 'Good Standing' mean?",
+				"How is academic status determined?",
+				"What factors affect my academic status?"
+			],
+			"responses": [
+				"Your academic status will appear in the 'Academic Status' section after selecting a year and clicking 'View Records'.",
+				"Good Standing means your GPA meets or exceeds the required threshold.",
+				"Academic status is determined based on your GPA and overall academic performance."
+			]
+		},
+		{
+			"tag": "gpa_questions",
+			"patterns": [
+				"What is my GPA?",
+				"How do I find my GPA?",
+				"What does 'Cumulative GPA' mean?",
+				"What’s the difference between Semester GPA and Cumulative GPA?",
+				"How is my GPA calculated?",
+				"What does my GPA mean?"
+			],
+			"responses": [
+				"Your GPA is displayed in the 'Current GPA' section. Select an academic year and click 'View Records' to retrieve your GPA.",
+				"Cumulative GPA is the overall grade point average for all semesters.",
+				"Semester GPA is calculated for a specific semester, while cumulative GPA includes all semesters.",
+				"Your GPA is calculated by dividing the total grade points you earned by the total number of credits attempted."
+			]
+		},
+		{
+			"tag": "contact_support",
+			"patterns": [
+				"How can I contact support?",
+				"I need help",
+				"Contact support team",
+				"Who can help with my records?",
+				"Support email",
+				"How do I report an issue with the dashboard?"
+			],
+			"responses": [
+				"You can contact support at support@utechjamaica.edu.",
+				"For issues with records, reach out to your academic advisor or technical support.",
+				"To report an issue, send a detailed email to support@utechjamaica.edu or visit the university's support portal."
+			]
+		},
+		{
+			"tag": "module_records",
+			"patterns": [
+				"Show my module records",
+				"Where are my module records?",
+				"Display modules and grades",
+				"I want to see my module performance"
+			],
+			"responses": [
+				"Module records are displayed under the 'Module Records' section after you select an academic year and click 'View Records'.",
+				"To view module performance, choose the desired academic year and access the Module Records section."
+			]
+		},
+		{
+			"tag": "chatbot_help",
+			"patterns": [
+				"What can you do?",
+				"Help me with the system",
+				"How do I use the chatbot?",
+				"What are your features?",
+				"Can the chatbot help with academic records?"
+			],
+			"responses": [
+				"I can guide you through the system, help you view academic records, check your GPA and academic status, access module records, and provide support contact information.",
+				"The chatbot can assist you with questions about GPA, academic status, and how to navigate the portal.",
+				"Type your query in the input box and I'll assist you!"
+			]
+		},
+		{
+			"tag": "technical_issues",
+			"patterns": [
+				"What should I do if the dashboard doesn’t load?",
+				"How do I fix login errors?",
+				"What should I do if the GPA isn’t updating?",
+				"Who do I contact for technical issues?"
+			],
+			"responses": [
+				"If the dashboard doesn’t load, try refreshing your browser or clearing the cache.",
+				"For login errors, ensure your credentials are correct or reset your password.",
+				"Contact technical support for issues like GPA not updating or login errors."
+			]
+		},
+		{
+			"tag": "miscellaneous",
+			"patterns": [
+				"Can I download my records?",
+				"How do I print my grades?",
+				"What does each column in the academic records table mean?",
+				"Can I compare GPAs from different years?",
+				"What happens if my GPA changes after a semester?"
+			],
+			"responses": [
+				"Currently, downloading records is not supported, but you can screenshot the page.",
+				"Use your browser's print feature to print your grades.",
+				"Each column in the table provides specific details about your academic performance.",
+				"You can compare GPAs from different years by viewing records for each academic year."
+			]
+		},
+		{
+			"tag": "logout",
+			"patterns": [
+				"How do I sign out safely?",
+				"Is there a log out button?",
+				"Sign me out of my account.",
+				"How do I log out",
+				"Can you sign me out"
+			],
+			"responses": [
+				"To log out, click the 'Logout' button in the top right corner of the dashboard. This will securely sign you out of your account.",
+				"Always remember to log out after using the portal to protect your information."
+			]
+		}
+	]
+}

@@ -1,5 +1,6 @@
 %-------- Facts -----------
-default_gpa(2.0).
+default_gpa(3.9).
+
 
 % ------ Facts for grade points
 % Grade points for exact letter grades
@@ -59,14 +60,7 @@ grade_point(Score, Grade) :-
 grade_point(Score, Grade) :-
     Score < 1.3,
     Grade = 'U'.
-
-% Base case: The sum of an empty list is 0.
-calculate_GP_per_module([],[], 0).
-% Recursive case: Compute the weighted sum.
-calculate_GP_per_module([C|Credits], [G|GradePoints], Total) :-
-    WeightedGrade is C * G,                 
-    calculate_GP_per_module(Credits, GradePoints, SumTail), 
-    Total is WeightedGrade + SumTail.   
+  
    
 % Rule to calculate the total credits earned per semester
 calculate_total_credits([], 0). % Base Case
@@ -76,14 +70,22 @@ calculate_total_credits([C|Credits], Total) :-
    Total is C + SumTail.
 
 
+calculate_sum_GP_semester([], [], 0).
+calculate_sum_GP_semester([C|Credits], [G|GradePoints], Total) :-
+    WeightedGrade is C * G,
+    calculate_sum_GP_semester(Credits, GradePoints, SumTail),
+    Total is WeightedGrade + SumTail.
+
+
 calculate_total_grade_points([], 0).
 calculate_total_grade_points([G|GradePoints], Total) :-
    calculate_total_grade_points(GradePoints, SumTail),
    Total is (G + SumTail).
 
+
 calculate_semester_GPA(SumGP, SumCred, GPA) :-
    GPA is (SumGP/SumCred).
 
-calculate_cumulative_GPA(Sem1GPA, Sem2GPA, X) :-
-   X is (Sem1GPA+Sem2GPA).
+calculate_cumulative_GPA(X, Y, Z) :-
+   Z is (X / Y).
 

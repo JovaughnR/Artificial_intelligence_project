@@ -1,5 +1,5 @@
 class Person:
-    def __init__(self, ID, first_name, last_name, email, password):
+    def __init__(self, ID, first_name, last_name, email):
         """
         Initialize the common attributes for both Student and Staff.
         """
@@ -7,7 +7,6 @@ class Person:
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.password = password
 
     def __str__(self):
         """
@@ -27,22 +26,24 @@ class Person:
         Return the full name of the person.
         """
         return f"{self.first_name} {self.last_name}"
+    
 
 # Now, Student and Staff will inherit from the Person class
 
 class Student(Person):
-    def __init__(self, ID, first_name, last_name, email, password, programme):
+    def __init__(self, ID, first_name, last_name, email, programme):
         """
         Initialize the student with the provided attributes.
         """
-        super().__init__(ID, first_name, last_name, email, password)  # Initialize the parent class
+        super().__init__(ID, first_name, last_name, email)  # Initialize the parent class
         self.programme = programme
+        self.type = "student"
 
     def __str__(self):
         """
         Return a string representation of the student.
         """
-        return f"{super().__str__()}, Student ID: {self.id}, Password: {self.password} Programme: {self.programme}"
+        return f"{super().__str__()}, Student ID: {self.id}, Programme: {self.programme}"
 
     def update_password(self, new_password):
         """
@@ -51,7 +52,7 @@ class Student(Person):
         self.password = new_password
         print(f"Password updated for student ID: {self.id}")
 
-    def get_student_details(self) -> tuple:
+    def get_details(self) -> tuple:
         """
         Returns a tuple of current student details.
         """
@@ -61,22 +62,16 @@ class Student(Person):
             self.programme
         )
    
-    def get_student_credentials(self):
-       """
-       Returns the student authentication details.
-       """
-       return [
-           self.id, self.password
-       ]
 
 class Staff(Person):
-    def __init__(self, ID, first_name, last_name, email, password, staff_type, school):
+    def __init__(self, ID, first_name, last_name, email, staff_type, school):
         """
         Initialize the staff with the provided attributes.
         """
-        super().__init__(ID, first_name, last_name, email, password)  # Initialize the parent class
+        super().__init__(ID, first_name, last_name, email)  # Initialize the parent class
         self.staff_type = staff_type
         self.school = school
+        self.type = "staff"
 
     def __str__(self):
         """
@@ -91,7 +86,7 @@ class Staff(Person):
         self.staff_type = new_type
         print(f"Staff type updated for staff ID: {self.id}")
 
-    def get_staff_details(self) -> tuple:
+    def get_details(self) -> tuple:
         """
         returns the details for the current staff member
         """
@@ -101,14 +96,7 @@ class Staff(Person):
             self.staff_type, self.school
         )
     
-    def get_staff_credentials(self) -> tuple:
-        """
-        Returns the current staff member login credentials
-        """
-        return [
-            self.id, self.password
-        ]
 
-info = [2111876, "Jovaughn", "Rose", "jovaughnrose4@gmail.com", "jov83b$1", "Computer Science"]
-student = Student(*info)
-print(student)
+# info = [2111876, "Jovaughn", "Rose", "jovaughnrose4@gmail.com", "jov83b$1", "Computer Science"]
+# student = Student(*info)
+# print(student.get_credentials())

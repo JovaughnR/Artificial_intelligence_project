@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Admin Dashboard - Academic Probation Alert</title>
+		<link rel="stylesheet" href="admin.css" />
+		<script defer src="scripts/admin.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Admin Dashboard - Academic Probation Alert System</h1>
+			<nav>
+				<ul class="nav-links">
+					<li><a id="staffAccount">Create Staff Account</a></li>
+					<li><a id="addModules">Add modules</a></li>
+				</ul>
+				<div class="user-profile">
+					<!-- <img src="profile-icon.png" alt="Profile" class="profile-icon" /> -->
+					<span class="user-name" id="staffName">Admin Name</span>
+					<button id="logout">Logout</button>
+				</div>
+			</nav>
+		</header>
+		<main>
+			<!-- Register Staff Section -->
+			<section class="staff-portal" id="staff" style="display: none">
+				<div class="register-close" onclick="closeRegisterPortal()"></div>
+				<h2>Register Staff</h2>
+				<form class="data-entry-form" id="staffForm">
+					<!-- Name and Identification -->
+					<div class="form-group">
+						<label for="firstName">First Name:</label>
+						<input type="text" id="firstName" name="firstName" required />
+					</div>
+					<div class="form-group">
+						<label for="lastName">Last Name:</label>
+						<input type="text" id="lastName" name="lastName" required />
+					</div>
+
+					<div class="form-group">
+						<label for="newStaffId">Staff ID:</label>
+						<input
+							type="text"
+							id="newStaffId"
+							name="newStaffId"
+							pattern="[0-9]+"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<input type="email" id="email" name="email" required />
+					</div>
+					<button type="submit">Create Staff Account</button>
+				</form>
+			</section>
+
+			<!-- Register Modules Section -->
+			<section class="modules-portal" id="registerModule" style="display: none">
+				<div class="module-close" onclick="closeModulePortal()">&times;</div>
+				<h2>Register Module</h2>
+				<form class="data-entry-form" id="moduleForm">
+					<div class="form-group">
+						<label for="moduleCode">Module Code:</label>
+						<input type="text" id="moduleCode" name="moduleCode" required />
+					</div>
+					<div class="form-group">
+						<label for="moduleName">Module Name:</label>
+						<input type="text" id="moduleName" name="ModuleName" required />
+					</div>
+					<div class="form-group">
+						<label for="credits">Credits:</label>
+						<input
+							type="text"
+							id="credits"
+							name="credits"
+							pattern="[0-9]+"
+							min="1"
+							max="4"
+							required
+						/>
+					</div>
+					<button type="submit">Save Module</button>
+				</form>
+			</section>
+		</main>
+
+		<footer id="contact">
+			<p>
+				Contact us at
+				<a href="mailto:support@utechjamaica.edu">support@utechjamaica.edu</a>
+			</p>
+			<p>&copy; 2024 University of Technology, Jamaica</p>
+		</footer>
+	</body>
+</html>

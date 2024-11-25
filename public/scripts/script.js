@@ -1,8 +1,4 @@
-const { response } = require("express");
-
 const lookup = (id) => document.getElementById(id);
-
-let isAuthenticated = false;
 
 const port = 3001;
 const host = `http://127.0.0.1:${port}`;
@@ -10,27 +6,42 @@ const host = `http://127.0.0.1:${port}`;
 const logout = lookup("logout");
 logout.addEventListener("click", () => signOut(host));
 
-async function establish(host) {
-	const data = { method: "GET" };
-   try {
-      const response = await fetch(`${host}/`);
+(async function (host) {
+	try {
+		const response = await fetch(`${host}/`, {
+			method: "GET",
+			credentials: "include",
+		});
 
-   }
-}
+		if (response.ok) return;
+
+		if (response.status === 401) {
+			// window.location.href = "/public/login.html";
+			window.location.replace("/public/login.html");
+			return;
+		}
+		// display error message
+	} catch (error) {
+		console.error(error);
+	}
+})(host);
 
 async function signOut(host) {
-	console.log("Host:", host);
-	const data = { method: "GET" };
 	try {
-		const response = await fetch(`${host}/logout`, data);
+		const response = await fetch(`${host}/logout`, {
+			method: "GET",
+			credentials: "include",
+		});
+
 		if (response.ok) {
-			alert("You have been logged out.");
-			window.location.href = "/public/login.html"; // Redirect to login page
-			isAuthenticated = false;
-		} else {
-			console.error("Failed to logout:", response.statusText);
-			alert("Logout failed. Try again.");
+			// window.location.href = "/public/login.html";
+			window.location.replace("/public/login.html");
+			return;
 		}
+		console.error("Failed to logout:", response.statusText);
+		alert("Logout failed. Try again.");
+
+		// display error message
 	} catch (error) {
 		console.error("Network error during logout:", error);
 		alert("Logout failed due to a network error.");
