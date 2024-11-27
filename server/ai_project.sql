@@ -6,6 +6,8 @@ use ai_project;
 
 
 select * from students;
+
+delete from students;
 CREATE TABLE `students` (
   `usrID` int(7) PRIMARY KEY NOT NULL, -- Update set usrID as primary key
   `firstName` varchar(20) NOT NULL,
@@ -14,13 +16,19 @@ CREATE TABLE `students` (
   `programme` varchar(30) NOT NULL
 );
 
+delete from students where usrID = 2111876;
+delete from user_auth where usrID = 2111876;
+
+
+select * from staff;
+
+delete from staff where usrID = 2111877;
+
 CREATE TABLE `staff` (
   `usrID` int(7) PRIMARY KEY NOT NULL, -- UPDATE set  usrID
   `fname` varchar(25) NOT NULL,
   `lname` varchar(25) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `Type` varchar(70) NOT NULL,
-  `school` varchar(25) NOT NULL
+  `email` varchar(50) NOT NULL
 );
 
 create table `user_auth` (
@@ -50,6 +58,8 @@ CREATE TABLE `module_details` (
 );
 
 select * from module_details;
+
+select * from module_details where usrID = 2111876;
 
 INSERT INTO `module_details` (`modulecode`, `module`, `usrID`, `year`, `semester`, `gradepoints`) 
 VALUES
@@ -119,15 +129,15 @@ update `user_auth`
 set `password` = '6fe8554e848a28bc4226c2d3be32f7492e2fa93f6aa3be494b91faa3de974b3e'
 where usrID = 1245981;
 
-INSERT INTO `staff` (`usrID`, `fname`, `lname`, `email`, `Type`, `school`) 
+INSERT INTO `staff` (`usrID`, `fname`, `lname`, `email`) 
 VALUES
-(1245970, 'Javii', 'Doe', 'jdoe@gmail.com', 'Lecture', 'FOSS'),
-(1245977, 'Shemar', 'Allen', 'sallen@gmail.com', 'Admin', 'SCIT'),
-(1245989, 'Christophor', 'Jonson', 'cjonson@yahoo.com', 'Supervisor', 'SOBA'),
-(1245971, 'Kevin', 'jacson', 'kjacson@gmail.com', 'Supervisor', 'SCIT'),
-(1245676, 'Shania', 'Gray', 'sgray@gmail.com', 'Lecture', 'SOBA'),
-(1245571, 'Margrett', 'Jonson', 'mjonson@gmail.com', 'Lecture', 'SCIT'),
-(1245111, 'Stacey', 'Jonson', 'sjonson@yahoo.com', 'Admin', 'admin');
+(1245970, 'Javii', 'Doe', 'jdoe@gmail.com'),
+(1245977, 'Shemar', 'Allen', 'sallen@gmail.com'),
+(1245989, 'Christophor', 'Jonson', 'cjonson@yahoo.com' ),
+(1245971, 'Kevin', 'jacson', 'kjacson@gmail.com'),
+(1245676, 'Shania', 'Gray', 'sgray@gmail.com'),
+(1245571, 'Margrett', 'Jonson', 'mjonson@gmail.com'),
+(1245111, 'Stacey', 'Jonson', 'sjonson@yahoo.com');
 
 
 INSERT INTO `user_auth` (`usrID`, `password`, `type`) 
@@ -146,3 +156,9 @@ where usrID = 1245970;
 
 select * from user_auth;
 select * from students;
+
+
+-- Add an administrator to the system
+insert into user_auth values(
+  1111111, '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', "admin"
+);

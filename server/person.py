@@ -64,13 +64,11 @@ class Student(Person):
    
 
 class Staff(Person):
-    def __init__(self, ID, first_name, last_name, email, staff_type, school):
+    def __init__(self, ID, first_name, last_name, email):
         """
         Initialize the staff with the provided attributes.
         """
         super().__init__(ID, first_name, last_name, email)  # Initialize the parent class
-        self.staff_type = staff_type
-        self.school = school
         self.type = "staff"
 
     def __str__(self):
@@ -79,12 +77,6 @@ class Staff(Person):
         """
         return f"{super().__str__()}, Staff ID: {self.id}, Type: {self.staff_type}, School: {self.school}"
 
-    def update_staff_type(self, new_type):
-        """
-        Update the staff type (e.g., 'Lecture', 'Admin').
-        """
-        self.staff_type = new_type
-        print(f"Staff type updated for staff ID: {self.id}")
 
     def get_details(self) -> tuple:
         """
@@ -93,7 +85,6 @@ class Staff(Person):
         return (
             self.id, self.first_name, 
             self.last_name, self.email, 
-            self.staff_type, self.school
         )
     
 

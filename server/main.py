@@ -1,164 +1,179 @@
 """@author Jovaughn Rose"""
+
 from pyswip import Prolog
 from database import Database
 
-KnowledgeBase = 'calculator.pl'
-
 class PrologCalculator:
-   def __init__(self, database:Database):
-      """Initialize the Prolog calculator with a database and Prolog knowledgebase file."""
-      self.db = database
-      self.prolog = Prolog()
-      self.consult = self.prolog.consult
+    def __init__(self, database: Database, knowledge_base: str = 'calculator.pl'):
+        """
+        Initialize the Prolog calculator with a database and Prolog knowledge base file.
+        """
+        self.db = database
+        self.prolog = Prolog()
+        self.knowledge_base = knowledge_base
+        self._consult_knowledge_base()
 
-   def load(self):
-      self.knowledgebase = KnowledgeBase
+    def _consult_knowledge_base(self):
+        """
+        Consult the Prolog knowledge base.
+        """
+        try:
+            self.prolog.consult(self.knowledge_base)
+        except Exception as e:
+            raise RuntimeError(f"Failed to load Prolog knowledge base: {e}")
 
-   def calculate_sum_GP_credits(self, stdID: int, semester: int, year: str) -> float:
-      """Returns the sum of the `Grade Points * module credits` for a student in a semester."""
-      grade_pts, credits = self.db.get_GP_Credit(stdID, semester, year)
-      pl_grade_pts = f"[{','.join(map(str, grade_pts))}]"
-      pl_credits = f"[{','.join(map(str, credits))}]"
+    def _query_prolog(self, query: str):
+        """
+        Execute a query in Prolog and return the result.
+        """
+        try:
+            result = list(self.prolog.query(query))
+            return result
+        except Exception as e:
+            print(f"Error executing Prolog query '{query}': {e}")
+            return None
 
-      self.consult(KnowledgeBase)
-      query = f"calculate_sum_GP_semester({pl_credits}, {pl_grade_pts}, X)"
-      result = list(self.prolog.query(query))
+    def calculate_sum_GP_credits(self, stdID: int, semester: int, year: str) -> float:
+        """
+        Returns the sum of `Grade Points * module credits` for a student in a semester.
+        """
+        grade_pts, credits = self.db.get_GP_Credit(stdID, semester, year)
+        pl_grade_pts = f"[{','.join(map(str, grade_pts))}]"
+        pl_credits = f"[{','.join(map(str, credits))}]"
+        query = f"calculate_sum_GP_semester({pl_credits}, {pl_grade_pts}, X)"
+        result = self._query_prolog(query)
 
-      if result:
-         return result[0]['X']   
-      return False
+        return result[0]['X'] if result else 0.0
 
-   def calculate_total_credits(self, stdID: int, semester: int, year) -> float:
-      """Returns the sum of `Credits` for a student in a semester."""
-      credits = self.db.get_credits_byID(stdID, semester, year)
-      pl_credits = f"[{','.join(map(str, credits))}]"
+    def calculate_total_credits(self, stdID: int, semester: int, year: str) -> float:
+        """
+        Returns the sum of credits for a student in a semester.
+        """
+        credits = self.db.get_credits_by_id(stdID, semester, year)
+        pl_credits = f"[{','.join(map(str, credits))}]"
+        query = f"calculate_total_credits({pl_credits}, X)"
+        result = self._query_prolog(query)
 
-      self.consult(KnowledgeBase)
-      query = f"calculate_total_credits({pl_credits}, X)"
-      result = list(self.prolog.query(query))
+        return result[0]['X'] if result else 0.0
 
-      if result:
-         return result[0]['X']
-      return False
+    def calculate_GPA(self, stdID: int, semester: int, year: str) -> float:
+        """
+        Calculates and returns the GPA for a student in a semester.
+        """
+        sum_GP = self.calculate_sum_GP_credits(stdID, semester, year)
+        total_credits = self.calculate_total_credits(stdID, semester, year)
 
-   def calculate_GPA(self, stdID: int, semester: int, year: str) -> float:
-      """Calculates and returns the `GPA` for a student in a semester."""
-      sum_GP = self.calculate_sum_GP_credits(stdID, semester, year)
-      sum_Cred = self.calculate_total_credits(stdID, semester, year)
+        if not (sum_GP or total_credits):
+            return 0.0
+        query = f"calculate_semester_GPA({sum_GP}, {total_credits}, GPA)"
+        result = self._query_prolog(query)
 
-      self.consult(KnowledgeBase)
-      query = f"calculate_semester_GPA({sum_GP}, {sum_Cred}, GPA)"
-      result = list(self.prolog.query(query))
+        return round(result[0]['GPA'], 2) if result else 0.0
 
-      if result:
-         return f"{result[0]['GPA']:.2f}"
-      
-      return False
+    def cumulative_GPA(self, stdID: int, year: str) -> float:
+        """
+        Calculates and returns the cumulative GPA for a student across multiple semesters.
+        """
+        semesters = self.db.get_registered_semesters(stdID, year)
+        if not semesters:
+            return 0.0
 
-   def cumulative_GPA(self, stdID: int, year:str) -> float:
-      """Calculates and returns the `Cumulative GPA` for a student across multiple semesters."""
-      semesters = self.db.get_registered_semesters(stdID, year)
-      if not semesters:
-         raise LookupError("Student is not registered in Database")
-      
-      if len(semesters) == 1:
-         return self.calculate_GPA(stdID, semesters[0], year)
+        all_GP, all_credits = [], []
+        for semester in semesters:
+            sem_GP, sem_credits = self.db.get_GP_Credit(stdID, semester, year)
+            all_GP.extend(sem_GP)
+            all_credits.extend(sem_credits)
 
-      # Get all credits and grade points across semesters
-      all_GP = []
-      all_cred = []
+        pl_all_GP = f"[{','.join(map(str, all_GP))}]"
+        pl_all_credits = f"[{','.join(map(str, all_credits))}]"
+        query_GP = f"calculate_sum_GP_semester({pl_all_GP}, {pl_all_credits}, X)"
+        total_GP = self._query_prolog(query_GP)[0]['X']
 
-      for semester in semesters:
-         sem_GP, sem_cred = self.db.get_GP_Credit(stdID, semester, year)
-         all_GP.extend(sem_GP)
-         all_cred.extend(sem_cred)
+        query_credits = f"calculate_total_credits({pl_all_credits}, X)"
+        total_credits = self._query_prolog(query_credits)[0]['X']
 
-      # Convert lists to Prolog-compatible format
-      pl_all_GP = f"[{','.join(map(str, all_GP))}]"
-      pl_all_cred = f"[{','.join(map(str, all_cred))}]"
+        query_GPA = f"calculate_cumulative_GPA({total_GP}, {total_credits}, GPA)"
+        result = self._query_prolog(query_GPA)
 
-      # Calculate total grade points and credits
-      query = f"calculate_sum_GP_semester({pl_all_GP}, {pl_all_cred}, X)"
-      total_GP = list(self.prolog.query(query))[0]['X']
+        return round(result[0]['GPA'], 2) if result else 0.0
 
-      self.consult(KnowledgeBase)
-      query = f"calculate_total_credits({pl_all_cred}, X)"
-      total_credits = list(self.prolog.query(query))[0]['X']
+    def assign_grade(self, stdID: int, module_code: str) -> str:
+        """
+        Assigns and returns a grade based on a student's score for a module.
+        """
+        grade_point = self.db.get_single_grade_point(stdID, module_code)
+        query = f"grade_point({grade_point}, Grade)"
+        result = self._query_prolog(query)
 
-      # Calculate cumulative GPA
-      query = f"calculate_cumulative_GPA({total_GP}, {total_credits}, GPA)"
-      result = list(self.prolog.query(query))
+        if result:
+            return result[0]['Grade']
+        raise ValueError("Failed to assign grade for the student.")
 
-      if result:
-         return f"{result[0]['GPA']:.2f}"
-      
-      return False
+    def get_grade(self, grade_point: float) -> str:
+        """
+        Retrieves the grade associated with a given grade point.
+        """
+        query = f"grade_point({grade_point}, Grade)"
+        result = self._query_prolog(query)
 
-   def assign_grade(self, stdID: int, module_code: str) -> str:
-      """Assigns and returns a grade based on a student's score for a module."""
-      grade_point = self.db.get_singleGP_byStdID(stdID, module_code)
+        return result[0]['Grade'] if result else "Unknown"
 
-      self.consult(KnowledgeBase)
-      query = f"grade_point({grade_point}, Grade)"
-      result = list(self.prolog.query(query))
+    def update_gpa_threshold(self, new_gpa: float) -> bool:
+        """
+        Updates the default GPA threshold in the knowledge base.
+        """
+        try:
+            with open(self.knowledge_base, 'r') as kb:
+                lines = kb.readlines()
 
-      if result:
-         return result[0]['Grade']
-      raise ValueError("Failed to retrieve a Grade for student")
-   
-   def get_grade(self, grade_point):
-      query = f"grade_point({grade_point}, Grade)"
-      try:
-         self.consult(KnowledgeBase)
-         result = list(self.prolog.query(query))
-         return result[0]['Grade']
-      except Exception as e:
-         return False
-      
-   def update_gpa_threshold(self, new_gpa):
-      try:
-         with open(KnowledgeBase, 'r') as kb:
-            lines = kb.readlines()
-
-         with open(KnowledgeBase, 'w') as kb:
-            for line in lines:
-               if line.strip().startswith("default_gpa("):
-                  kb.write(f"default_gpa({new_gpa}).\n")
-               else:
-                  kb.write(line)
+            with open(self.knowledge_base, 'w') as kb:
+                for line in lines:
+                    if line.strip().startswith("default_gpa("):
+                        kb.write(f"default_gpa({new_gpa}).\n")
+                    else:
+                        kb.write(line)
+            self._consult_knowledge_base()
             return True
-      except Exception as e:
-         return False
-      
-   def get_default_gpa(self):
-      self.consult(KnowledgeBase)
-      query = "default_gpa(X)"
-      result = list(self.prolog.query(query)) 
-      if result:  
-         return result[0]['X']  
-      return None  
+        except Exception as e:
+            print(f"Error updating GPA threshold: {e}")
+            return False
 
+    def get_default_gpa(self) -> float:
+        """
+        Retrieves the default GPA threshold from the knowledge base.
+        """
+        query = "default_gpa(X)"
+        result = self._query_prolog(query)
 
-
-# prolog = Prolog()
-# # prolog.consult('calculator.pl')
+        return result[0]['X'] if result else 0.0
 
 # db = Database(
 #    host="localhost", 
 #    user="root", 
 #    password="", 
-#    db="ai_project"
+#    database="ai_project"
 # )
+# pl = PrologCalculator(db)
 
-# pl = PrologCalculator(db, 'calculator.pl')
+# while True:
+#    new_gpa = float(input("update default GPA: "))
+#    if new_gpa == 0.0:
+#        break
+#    current_gpa = pl.get_default_gpa()
+#    pl.update_gpa_threshold(new_gpa)
+#    print("Current GPA:", current_gpa)
+
 # grade = pl.get_grade(2.4)
 # print("Grade:", grade)
+# while True:
+#    user_id = int(input("Enter student ID: "))
+#    print(pl.calculate_GPA(user_id, 1, '2023'))
 # print(pl.get_default_gpa())
 
 
 # studID = input("Enter student ID: ")
 # module_code = input("Enter module code: ")
-# # print(pl.calculate_cumulative_GPA(2111876))
+# print(pl.cumulative_GPA(2111876, 2022))
 
 
 # total_GP = pl.calculate_total_GP(studID, 1)
@@ -178,7 +193,7 @@ class PrologCalculator:
 # print("Cumulative GPA:", cumulative_GPA)
 
 
-# grade = pl.assign_grade(studID, module_code)
+# grade = pl.assign_grade(21111876,)
 # print("Grade:", grade)
 
 # # while True:
