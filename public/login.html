@@ -5,57 +5,95 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Login Page</title>
 		<link rel="stylesheet" href="./login.css" />
-		<script defer src="../public/scripts/login_script.js"></script>
+		<script defer src="../public/scripts/login.js"></script>
 	</head>
 	<body>
 		<header class="navigation-bar">
 			<h1>Academic Probation Alert System</h1>
 		</header>
-		<form id="user-login">
-			<fieldset class="field">
-				<legend>
-					<i class="fa-solid fa-user icon"></i>
-				</legend>
-				<div>
-					<label for="userID">Identification Number</label>
-					<i class="fa-solid fa-id-card icon"></i>
-					<input type="text" name="userID" id="userID" required />
-				</div>
-				<div class="inline">
-					<label for="password">Password</label>
-					<i class="fa-solid fa-lock icon"></i>
-					<input type="password" name="password" id="password" required />
-				</div>
-				<div
-					id="error-message"
-					style="
-						color: rgb(255, 0, 0);
-						display: none;
-						font-size: 12px;
-						margin-bottom: 10px;
-					"
-				>
-					&nbsp;Incorrect Identification Number or Password.
-				</div>
-				<button type="submit" id="submit">Login</button>
+		<form id="userlogin">
+			<div>
+				<label for="userID">Identification Number</label>
+				<i class="fa-solid fa-id-card icon"></i>
+				<input type="text" name="userID" id="userID" required />
+			</div>
+			<div class="inline">
+				<label for="password">Password</label>
+				<i class="fa-solid fa-lock icon"></i>
+				<input type="password" name="password" id="password" required />
+			</div>
+			<button type="submit" id="submit">Login</button>
 
-				<div class="inline new-user-group">
-					<div>
-						<i class="fa-solid fa-person-circle-plus icon"></i>
-						<a href="./form.html">New User</a>
-					</div>
-					<div>
-						<i class="fa-solid fa-unlock icon"></i>
-						<a href="#">Forget Password</a>
-					</div>
+			<div class="inline new-user-group">
+				<div>
+					<i class="fa-solid fa-person-circle-plus icon"></i>
+					<a href="./form.html">New User</a>
 				</div>
-			</fieldset>
+				<div>
+					<a id="forgetPass">Forget Password</a>
+				</div>
+			</div>
 		</form>
+		<form class="data-entry-form hidden" id="verificationForm">
+			<div class="close1" onclick="toggleForm('verificationForm', 'userlogin')">
+				&times;
+			</div>
+			<h2>Verifcation</h2>
+			<div>
+				<p class="verification">
+					To recover your account after forgetting your password, you must first
+					verify your identity. Please use the ID number provided to you via
+					email or given by a staff member. Once your identity is verified, you
+					will be guided through the next steps to reset your password and
+					complete the recovery process.
+				</p>
+			</div>
+			<div class="form-group">
+				<label for="verifactionID">Identification Number</label>
+				<input type="text" name="verificationID" id="verifactionID" required />
+			</div>
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" name="email" id="email" required />
+			</div>
+			<button type="submit" id="submitBtn">Verify Identification</button>
+		</form>
+
+		<form class="data-entry-form hidden" id="resetPass">
+			<div class="close2" onclick="toggleForm('resetPass', 'userlogin')">
+				&times;
+			</div>
+			<h2>Reset Password</h2>
+			<div>
+				<p class="verification">
+					Your ID verification is complete! Proceed to set up your password to
+					secure your account. Create a strong password to finalize your
+					registration and unlock full access to the system. Let’s ensure your
+					account stays protected!
+				</p>
+			</div>
+			<!-- Password -->
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" name="pass1" id="pass1" required />
+			</div>
+			<div class="form-group">
+				<label for="confirmPass1">Confirm Password</label>
+				<input type="password" name="confirmPass1" id="confirmPass1" required />
+			</div>
+			<button type="submit">Reset Password</button>
+		</form>
+
+		<div class="error-message hidden" id="error">This is a error</div>
+		<div class="ok-message hidden" id="ok">This is ok</div>
 		<footer>
 			<p>
-				&copy; 2024 University of Technology Artificial Intelligence Students.
-				All rights reserved.
+				Contact us at
+				<a href="mailto:studentscalaborators@gmail.com"
+					>studentscalaborators@gmail.com</a
+				>
 			</p>
+			<p>&copy; 2024 University of Technology, Jamaica</p>
 		</footer>
 	</body>
 </html>

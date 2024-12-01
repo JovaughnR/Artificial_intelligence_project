@@ -321,7 +321,7 @@ class Database:
 
       except Exception as e:
          print(f"Unexpected error while verifying user {usrID}: {e}")
-         return False, None
+         return False
       
    def get_user_byID(self, usrID):
       """
@@ -483,7 +483,19 @@ class Database:
                self.__handle_error(e)
                return False
       return check_table("staff") if check_table("students") else False
-
+   
+   def verify_email_id(self, usrID, email):
+      def check_table(table):
+         query = f"SELECT usrID FROM {table} WHERE usrID = %s AND email = %s"
+         with self.connector.cursor(buffered=True) as cursor:
+            cursor.execute(query, (usrID, email))
+            return cursor.fetchone() is not None
+      try:
+         result = check_table("students")
+         return result if result else check_table("staff")
+      except Error as e:
+         self.__handle_error(e)
+         return False
 
     # Other methods are similarly refactored with consistent error handling...
 
@@ -494,6 +506,11 @@ class Database:
 #    password="", 
 #    database="ai_project"
 # )
+
+# students = db.get_all_students()
+# print(students)
+
+# print(db.verify_email_id(1345987, "mjonson@gmail.com"))
 
 # status  = db.valid_id_entry(1245111)
 # status  = db.validIDentry(2121871)

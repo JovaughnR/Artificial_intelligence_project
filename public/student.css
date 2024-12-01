@@ -1,4 +1,10 @@
 /* General Styles */
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
 html,
 body {
 	height: 100%;
@@ -22,7 +28,7 @@ input {
 
 /* Header */
 header {
-	background: #007bff;
+	background-color: #004aad;
 	color: #fff;
 	padding: 1rem;
 	text-align: center;
@@ -138,7 +144,9 @@ h2 {
 }
 
 .close-section1,
-.close-section2 {
+.close-section2,
+.gpa-portal-close,
+.records-close {
 	position: absolute;
 	top: 10px;
 	right: 15px;
@@ -150,7 +158,9 @@ h2 {
 }
 
 .close-section1:hover,
-.close-section2:hover {
+.close-section2:hover,
+.records-close:hover,
+.gpa-portal-close:hover {
 	color: #c00000;
 }
 
@@ -177,12 +187,12 @@ h2 {
 }
 
 #resultsSection1,
-#records-section,
-#gpa-section,
+#recordsSection,
+#gpaSection,
 #resultsSection2 {
 	background-color: transparent;
 	position: relative;
-	display: flex;
+	/* display: flex; */
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -191,6 +201,14 @@ h2 {
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 	/* height: 180px; */
 	min-height: 180px;
+}
+
+.hidden {
+	display: none;
+}
+
+.visible {
+	display: flex;
 }
 
 .form-group {
@@ -324,7 +342,7 @@ table caption {
 }
 
 /* Chat Bot */
-#chat_bot {
+#chatBot {
 	position: fixed;
 	right: 30px;
 	bottom: 160px;
@@ -346,7 +364,6 @@ table caption {
 #responses {
 	position: relative;
 	background-color: #ffffff;
-	display: grid;
 	border: 1px solid #ddd;
 	padding: 10px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -356,6 +373,10 @@ table caption {
 	overflow-y: auto;
 	box-sizing: border-box;
 	margin-top: 15px;
+}
+
+.unhidden {
+	display: grid;
 }
 
 .user-response-area {
@@ -402,14 +423,16 @@ table caption {
 
 /* Footer */
 footer {
-	background: #343a40;
-	color: white;
+	background-color: #004aad;
+	color: #fff;
 	text-align: center;
 	padding: 1rem 0;
+	width: 100%;
+	margin-top: auto;
 }
 
 footer a {
-	color: #007bff;
+	color: #f1c40f;
 	text-decoration: none;
 }
 

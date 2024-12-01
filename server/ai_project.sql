@@ -139,7 +139,8 @@ VALUES
 (1245571, 'Margrett', 'Jonson', 'mjonson@gmail.com'),
 (1245111, 'Stacey', 'Jonson', 'sjonson@yahoo.com');
 
-
+use ai_project;
+select fname from staff where usrID = 1245111;
 INSERT INTO `user_auth` (`usrID`, `password`, `type`) 
 VALUES
 (1245970, 'iamtired54', 'staff'),

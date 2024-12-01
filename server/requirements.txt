@@ -1,0 +1,23 @@
+# Flask and CORS for handling HTTP requests and enabling cross-origin resource sharing
+Flask==3.0.2
+Flask-Cors==5.0.0
+
+# Environment variable management
+python-dotenv==1.0.1
+
+# MySQL connector for database management (adjust if using another database)
+mysql-connector-python==9.1.0
+
+# Prolog integration using SWI-Prolog
+pyswip==0.3.2
+
+# Machine learning and deep learning libraries
+numpy==1.24.2
+torch==2.4.1
+transformers==4.45.2
+
+# Email handling (built-in `smtplib`, no need to list it explicitly)
+# No additional package is needed unless you use a third-party email service
+
+# Neural network handling (assuming NeuralNetwork is custom code)
+# No external dependencies listed specifically for this if you're handling it via PyTorch.

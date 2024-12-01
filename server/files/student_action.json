@@ -1,0 +1,48 @@
+{
+	"intents": [
+		{
+			"tag": "action_view_records",
+			"patterns": [
+				"Show my academic records",
+				"I want to view my records",
+				"View records for 2026",
+				"View records for 2025",
+				"View records for 2024",
+				"View records for 2023",
+				"View records for 2022",
+				"View records for 2021",
+				"View records for 2020",
+				"Select academic year"
+			],
+			"responses": "fetchRecords"
+		},
+		{
+			"tag": "action_logout",
+			"patterns": [
+				"Log me out",
+				"Sign out",
+				"Is there a log out button?",
+				"How do I sign out safely?"
+			],
+			"responses": "logout"
+		},
+		{
+			"tag": "action_display_gpa",
+			"patterns": [
+				"Check my GPA",
+				"Display my GPA",
+				"Show my current GPA",
+				"How do I find my GPA?"
+			],
+			"responses": "gpaSection"
+		},
+		{
+			"tag": "view_all_records",
+			"patterns": [
+				"Show my all academic records",
+				"I want to see all my records"
+			],
+			"responses": "fetchRecords"
+		}
+	]
+}

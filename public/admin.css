@@ -1,4 +1,10 @@
 /* General Styles */
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f8f9fa;
@@ -18,7 +24,7 @@ input {
 
 /* Header */
 header {
-	background: #007bff;
+	background-color: #004aad;
 	color: #fff;
 	padding: 1rem;
 	text-align: center;
@@ -119,12 +125,20 @@ h2 {
 	color: #007bff;
 }
 
+.hidden {
+	display: none;
+}
+
+.visible {
+	display: flex;
+}
+
 /* Forms */
 #staff,
 #registerModule {
 	background-color: transparent;
 	position: relative;
-	display: flex;
+	/* display: flex; */
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
@@ -135,6 +149,7 @@ h2 {
 }
 
 .form-group {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -178,10 +193,68 @@ h2 {
 	justify-content: center;
 }
 
+/* Error message styling */
+.error-message {
+	position: fixed; /* Absolute positioning for better control */
+	color: #d9534f; /* Red color for errors */
+	font-size: 0.875rem;
+	margin-top: 20px; /* Small top margin to ensure it's not too close */
+	display: block;
+	background-color: #fff; /* Optional: makes text more readable if background is not light */
+	padding: 5px;
+	border-radius: 3px; /* Rounded corners */
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better visibility */
+}
+
+/* Notification styling */
+.notification {
+	position: fixed;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #5bc0de; /* Light blue background for success */
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 1rem;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	z-index: 9999;
+	opacity: 0;
+	animation: fadeInOut 3s ease-out forwards;
+}
+
+/* Success and error notification types */
+.notification.success {
+	background-color: #5cb85c; /* Green color for success */
+}
+
+.notification.error {
+	background-color: #d9534f; /* Red color for error */
+}
+
+/* Fade-in and fade-out animation */
+@keyframes fadeInOut {
+	0% {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	25% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	75% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
-	.sfaff-portal,
-	.modules-portal {
+	.hidden {
 		padding: 1.5rem;
 	}
 

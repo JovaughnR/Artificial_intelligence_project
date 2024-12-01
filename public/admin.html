@@ -12,20 +12,20 @@
 			<h1>Admin Dashboard - Academic Probation Alert System</h1>
 			<nav>
 				<ul class="nav-links">
-					<li><a id="staffAccount">Create Staff Account</a></li>
-					<li><a id="addModules">Add modules</a></li>
+					<li><a href="#" id="staffAccount">Create Staff Account</a></li>
+					<li><a href="#" id="addModules">Add Modules</a></li>
 				</ul>
 				<div class="user-profile">
-					<!-- <img src="profile-icon.png" alt="Profile" class="profile-icon" /> -->
-					<span class="user-name" id="staffName">Admin Name</span>
+					<span class="user-name" id="adminName"></span>
 					<button id="logout">Logout</button>
 				</div>
 			</nav>
 		</header>
+
 		<main>
 			<!-- Register Staff Section -->
-			<section class="staff-portal" id="staff" style="display: none">
-				<div class="register-close" onclick="closeRegisterPortal()"></div>
+			<section class="hidden" id="staff">
+				<div class="register-close" onclick="closeStaffPortal()">&times;</div>
 				<h2>Register Staff</h2>
 				<form class="data-entry-form" id="staffForm">
 					<!-- Name and Identification -->
@@ -37,7 +37,6 @@
 						<label for="lastName">Last Name:</label>
 						<input type="text" id="lastName" name="lastName" required />
 					</div>
-
 					<div class="form-group">
 						<label for="newStaffId">Staff ID:</label>
 						<input
@@ -57,7 +56,7 @@
 			</section>
 
 			<!-- Register Modules Section -->
-			<section class="modules-portal" id="registerModule" style="display: none">
+			<section class="hidden" id="registerModule">
 				<div class="module-close" onclick="closeModulePortal()">&times;</div>
 				<h2>Register Module</h2>
 				<form class="data-entry-form" id="moduleForm">
@@ -67,15 +66,14 @@
 					</div>
 					<div class="form-group">
 						<label for="moduleName">Module Name:</label>
-						<input type="text" id="moduleName" name="ModuleName" required />
+						<input type="text" id="moduleName" name="moduleName" required />
 					</div>
 					<div class="form-group">
 						<label for="credits">Credits:</label>
 						<input
-							type="text"
+							type="number"
 							id="credits"
 							name="credits"
-							pattern="[0-9]+"
 							min="1"
 							max="4"
 							required

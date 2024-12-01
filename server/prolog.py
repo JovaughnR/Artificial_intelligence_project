@@ -153,8 +153,12 @@ class PrologCalculator:
 #    password="", 
 #    database="ai_project"
 # )
+
 # pl = PrologCalculator(db)
 
+# students = db.get_all_students()
+# for student in students:
+#    print(pl.cumulative_GPA(student[0], 2024))
 # while True:
 #    new_gpa = float(input("update default GPA: "))
 #    if new_gpa == 0.0:

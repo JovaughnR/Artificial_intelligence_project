@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Staff Dashboard - Academic Probation Alert</title>
 		<link rel="stylesheet" href="staff.css" />
-		<script defer src="scripts/staff_script.js"></script>
+		<script defer src="scripts/staff.js"></script>
 	</head>
 	<body>
 		<header>
@@ -16,6 +16,7 @@
 					<li><a id="registerStudentLink">Register Student</a></li>
 					<li><a id="addModuleDetailLink">Add Module Details</a></li>
 					<li><a id="gpaThresholdLink">Update GPA Threshold</a></li>
+					<li><a id="semesterEnd">Semesters End</a></li>
 				</ul>
 				<div class="user-profile">
 					<!-- <img src="profile-icon.png" alt="Profile" class="profile-icon" /> -->
@@ -26,8 +27,8 @@
 		</header>
 
 		<main>
-			<section class="admin-portal" id="admin" style="display: none">
-				<div class="admin-close" onclick="closeAdmin()">&times;</div>
+			<section class="admin-portal hidden" id="admin">
+				<div class="admin-close" onclick="closePortal('admin')">&times;</div>
 				<h2>Retrieve Student GPA records</h2>
 				<form id="adminForm" class="data-entry-form">
 					<div class="form-group">
@@ -61,12 +62,8 @@
 			</section>
 
 			<!-- Register Student Section -->
-			<section
-				class="register-portal"
-				id="registerStudent"
-				style="display: none"
-			>
-				<div class="register-close" onclick="closeRegisterPortal()">
+			<section class="register-portal hidden" id="registerStudent">
+				<div class="register-close" onclick="closePortal('registerStudent')">
 					&times;
 				</div>
 				<h2>Register Student</h2>
@@ -102,12 +99,11 @@
 			</section>
 
 			<!-- Add Module Details Section -->
-			<section
-				class="module-portal"
-				id="addModuleDetails"
-				style="display: none"
-			>
-				<div class="module-portal-close" onclick="closeModulePortal()">
+			<section class="module-portal hidden" id="addModuleDetails">
+				<div
+					class="module-portal-close"
+					onclick="closePortal('addModuleDetails')"
+				>
 					&times;
 				</div>
 				<h2>Add Module Details</h2>
@@ -173,43 +169,44 @@
 				</form>
 			</section>
 
-			<section id="resultsSection" style="display: none; position: relative">
-				<div class="close-section" onclick="closeSection()">&times;</div>
+			<section id="results" class="hidden">
 				<!-- Close icon -->
-				<div class="student-info" id="record-table">
-					<table border="1">
-						<caption>
-							Student Academic Records
-						</caption>
-						<tr>
-							<th>Student Name</th>
-							<th>Identification Number</th>
-							<th>GPA Semester 1</th>
-							<th>GPA Semester 2</th>
-							<th>Cumulative GPA</th>
-							<th>Programme</th>
-						</tr>
-					</table>
-				</div>
+				<div class="result-close" onclick="closePortal('results')">&times;</div>
+				<!-- <div class="student-info"> -->
+				<table id="record-table">
+					<caption>
+						Student Academic Records
+					</caption>
+					<tr>
+						<th>Student Name</th>
+						<th>Identification Number</th>
+						<th>GPA Semester 1</th>
+						<th>GPA Semester 2</th>
+						<th>Cumulative GPA</th>
+						<th>Programme</th>
+					</tr>
+				</table>
+				<!-- </div> -->
 				<div id="moduleRecords" class="module-list">
 					<!-- Module records will be populated here -->
 				</div>
-				<div class="actions">
+				<!-- <div class="actions">
 					<button type="submit" id="generateReport">Generate Report</button>
-				</div>
+				</div> -->
 			</section>
 
-			<section id="gpaThreshold" class="hidden">
+			<section class="gpa-threshold-portal hidden" id="gpaThreshold">
+				<!-- <div class="data-entry-form"> -->
 				<div
 					class="gpa-threshold-close"
-					onclick="closeThresholdPortal()"
+					onclick="closePortal('gpaThreshold')"
 					aria-label="Close GPA Threshold"
 				>
 					&times;
 				</div>
 				<h2>Update Default GPA</h2>
 				<h4 id="defaulted_gpa">Default GPA: 4.0</h4>
-				<div class="form-group">
+				<div>
 					<label for="newDefaultGPA">New Default GPA:</label>
 					<input
 						type="number"
@@ -221,9 +218,40 @@
 						required
 					/>
 				</div>
+				<!-- </div> -->
 				<button type="button" onclick="updateGPAthreshold()">
 					Update Default GPA
 				</button>
+			</section>
+
+			<section class="end-semester-portal hidden" id="endSemester">
+				<div
+					class="end-semester-close"
+					onclick="closePortal('endSemester')"
+					aria-label="Send out alerts"
+				>
+					&times;
+				</div>
+				<h2>Send out alerts</h2>
+				<form id="semEndForm" class="data-entry-form">
+					<div class="form-group">
+						<label for="schoolYear">Year:</label>
+						<input
+							type="number"
+							id="schoolYear"
+							name="schoolYear"
+							min="2024"
+							max="2036"
+							step="1"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label for="pass">Cofirm with password:</label>
+						<input type="password" id="pass" name="pass" required />
+					</div>
+					<button type="submit">Send Alerts</button>
+				</form>
 			</section>
 
 			<section id="responses" class="hidden">
@@ -255,7 +283,9 @@
 		<footer id="contact">
 			<p>
 				Contact us at
-				<a href="mailto:support@utechjamaica.edu">support@utechjamaica.edu</a>
+				<a href="mailto:studentscalaborators@gmail.com"
+					>studentscalaborators@gmail.com</a
+				>
 			</p>
 			<p>&copy; 2024 University of Technology, Jamaica</p>
 		</footer>

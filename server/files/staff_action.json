@@ -1,0 +1,64 @@
+{
+	"intents": [
+		{
+			"tag": "action_view_module_records",
+			"patterns": [
+				"Show my module records",
+				"Display module performance",
+				"Where are my module records?"
+			],
+			"responses": "fetchModuleRecords"
+		},
+		{
+			"tag": "retrieve_student_records",
+			"patterns": [
+				"Retrieve student records",
+				"Show student information",
+				"Find student record by ID",
+				"Get academic records for a student",
+				"Fetch student records"
+			],
+			"responses": "retrieveStudentRecords"
+		},
+		{
+			"tag": "validate_student_id",
+			"patterns": [
+				"Validate student ID",
+				"Check student ID format",
+				"Ensure student ID is correct",
+				"How do I enter a valid student ID?"
+			],
+			"responses": "validateStudentId"
+		},
+		{
+			"tag": "update_gpa_threshold",
+			"patterns": [
+				"Update GPA threshold",
+				"Change GPA threshold",
+				"Modify academic probation GPA",
+				"Adjust GPA limit"
+			],
+			"responses": "updateGPAThreshold"
+		},
+		{
+			"tag": "fetch_student_data",
+			"patterns": [
+				"Fetch student data",
+				"Get student information",
+				"Retrieve detailed student record",
+				"Load student data from server"
+			],
+			"responses": "fetchStudentData"
+		},
+		{
+			"tag": "fetch_module_data",
+			"patterns": [
+				"Fetch module data",
+				"Load module performance",
+				"Retrieve module records",
+				"Get detailed module results"
+			],
+			"responses": "fetchModuleData"
+		}
+	]
+}

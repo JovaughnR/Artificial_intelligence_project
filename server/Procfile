@@ -1,0 +1,1 @@
+web: gunnicorn app:app

@@ -5,148 +5,104 @@ from Network import NeuralNetwork
 import json
 import random
 
+# ------------------ Load Models and Vocabularies ------------------
+def load_model_and_vocab(model_path, vocab_path):
+    model = NeuralNetwork.load(model_path)
+    vocab = np.load(vocab_path)
+    return model, vocab
 
-# Load knowledge base model
-# model_1 = NeuralNetwork.load("prolog_knowledge_model.pkl")
+# Load classifier and vocab
+classifier, classifier_vocab = load_model_and_vocab(
+    "./files/classifier_model.pkl", "./files/classifier_embeddings.npy"
+)
 
-# ------------- Load all models their paramters -----------
-# Load classifier model parameters
-classifier = NeuralNetwork.load("files/action_queries_model.pkl")
-# Load the classfier model embedded arguments
-classifier_args = np.load('./files/classifier_embeddings.npy')
+# Load student action model and vocab
+student_action_model, student_action_vocab = load_model_and_vocab(
+    "./files/student_action_model.pkl", "./files/student_action_embeddings.npy"
+)
 
-# Load action model parameters
-student_action_model = NeuralNetwork.load('./files/student_action_model.pkl')
-# Load action model embedded arguments
-student_action_args = np.load('./files/action_args_embeddings.npy')
+# Load student query model and vocab
+student_query_model, student_query_vocab = load_model_and_vocab(
+    "./files/student_query_model.pkl", "./files/student_query_embeddings.npy"
+)
 
-# Load student querries model parameters
-student_query_model = NeuralNetwork.load("./files/student_query_model.pkl")
-# Load student queries model embedded arguments
-student_query_args = np.load('./files/student_query_embeddings.npy')
+# Load staff action model and vocab
+staff_action_model, staff_action_vocab = load_model_and_vocab(
+    "./files/staff_action_model.pkl", "./files/staff_action_embeddings.npy"
+)
 
-# --------------------------------------------------------
+# Load staff query model and vocab
+staff_query_model, staff_query_vocab = load_model_and_vocab(
+    "./files/staff_query_model.pkl", "./files/staff_query_embeddings.npy"
+)
+# ------------------------------------------------------------------
 
-def load(filepath):
-    all_patterns = []
-
+# ------------------ Load Data Files ------------------
+def load_json(filepath):
     with open(filepath, 'r') as f:
         data = json.load(f)
-        for intent in data['intents']:
-            for pattern in intent["patterns"]:
-                all_patterns.append(pattern)
+    return data
 
-    return data, all_patterns
+classes = load_json('./files/classifier.json')
+student_actions = load_json('./files/student_action.json')
+student_queries = load_json('./files/student_query.json')
+staff_actions = load_json('./files/staff_action.json')
+staff_queries = load_json('./files/staff_query.json')
+# -----------------------------------------------------
 
-# ------------------ Load all data files -----------------
-# Load the `classifier.json` file
-classes, patterns = load('./files/classifier.json')
-
-# Load the `actions`.json file
-student_actions, patterns = load('./files/actions.json')
-
-# Load the `student_queries.json` file
-student_queries, patterns = load('./files/student_data.json')
-# -------------------------------------------------------
-
-
-# Load pre-trained BERT model and tokenizer
+# ------------------ Load Pre-trained BERT Model ------------------
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model = BertModel.from_pretrained('bert-base-uncased')
+bert_model = BertModel.from_pretrained('bert-base-uncased')
 
-# Function to get BERT embedding for a sentence
 def get_bert_embedding(sentence):
-    inputs = tokenizer(
-        sentence, return_tensors="pt", 
-        padding=True, truncation=True, 
-        max_length=512
-    )
+    inputs = tokenizer(sentence, return_tensors="pt", padding=True, truncation=True, max_length=512)
     with torch.no_grad():
-        outputs = model(**inputs)
+        outputs = bert_model(**inputs)
     return outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
+# -----------------------------------------------------------------
 
-
-def predict_class(user_input, args, model, object):
-    X = args
+# ------------------ Prediction Functions ------------------
+def predict_class(user_input, vocab, model, intents):
     embedding = get_bert_embedding(user_input)
-    normalized_embedding = (embedding-np.mean(X))/np.std(X)
+    normalized_embedding = (embedding - np.mean(vocab)) / np.std(vocab)
     outcomes = model.predict(normalized_embedding)
-    intent = object["intents"][np.argmax(outcomes)]
+    intent = intents["intents"][np.argmax(outcomes)]
     return intent["tag"], intent["responses"]
 
-
-def binary_classfier(user_input):
+def binary_classifier(user_input):
     return predict_class(
-        user_input, classifier_args, classifier, classes
+        user_input, classifier_vocab, classifier, classes
     )[0]
 
 
+def predict(user_input, type):
+    tag = binary_classifier(user_input)
+    if type == "staff":
+        if tag == "actions":
+            return tag, predict_action_or_query(
+                user_input, staff_query_vocab,
+                staff_query_model, staff_queries
+            )
+        elif tag == "queries":
+            return tag, random.choice(predict_action_or_query(
+                user_input, staff_query_vocab, 
+                staff_query_model, staff_queries
+            ))
+    elif type == "student":
+        if tag == "actions":
+            return tag, predict_action_or_query(
+                user_input, student_action_vocab, 
+                student_action_model,student_actions 
+            )
+        elif tag == "queries":
+            return tag, random.choice(predict_action_or_query(
+                user_input, student_query_vocab, 
+                student_query_model, student_queries
+            ))
 
-def predict(user_input):
-    print("Predicting")
-    tag = binary_classfier(user_input)
-    if tag == "actions":
-        tag, response = predict_class(
-            user_input, student_action_args, 
-            student_action_model, student_actions
-        )
-        return "actions", response
-    
-    elif tag == "queries":
-        tag, response = predict_class(
-            user_input, student_query_args,
-            student_query_model, student_queries
-        )
-        rand = random.randint(0, len(response)-1)
-        return "queries", response[rand]
-
-
-# print(binary_classifier_params)
-
-
-
-# data_object_1, patterns = load('./files/student_data.json')
-# pattern_embeddings_1 = np.array(
-#         [get_bert_embedding(pattern) for pattern in patterns]
-#     )
-
-# np.save("./files/student_query_embeddings.npy", pattern_embeddings_1)
-
-# print(pattern_embeddings_1.shape)
-
-# data_object_2, patterns = read_file('./files/actions.json')
-# pattern_embeddings_2 = np.array(
-#     [get_bert_embedding(pattern) for pattern in patterns]
-# )
-
-# np.save("files/actions_embeddings.npy", pattern_embeddings_2)
-# classes = []
-# # Combine all patterns
-# all_patterns = []
+def predict_action_or_query(user_input, vocab, model, intents):
+    _, response = predict_class(user_input, vocab, model, intents)
+    return response
 
 
-
-
-# Read data from JSON and create labels
-# with open('data.json', 'r') as f:
-#     data = json.load(f)
-
-#     for intent in data['intents']:
-#         classes.append(intent["tag"])
-#         for pattern in intent["patterns"]:
-#             all_patterns.append(pattern)
-
-
-
-
-
-# def predict_class(user_input, object, model: NeuralNetwork):
-#     X = pattern_embeddings
-#     embedding = get_bert_embedding(user_input)
-#     normalized_embedding = (embedding - np.mean(X)) / np.std(X)
-#     probabilities = model.predict(normalized_embedding)
-#     return object["intents"][np.argmax(probabilities)]["tag"]
-
-
-
-
+# -------------------------------------------------------

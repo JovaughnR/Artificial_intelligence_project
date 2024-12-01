@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Student Dashboard - Academic Probation Alert</title>
 		<link rel="stylesheet" href="student.css" />
-		<script defer src="scripts/student_script.js"></script>
+		<script defer src="scripts/student.js"></script>
 	</head>
 	<body>
 		<header>
@@ -24,12 +24,11 @@
 			</nav>
 		</header>
 		<main>
-			<section
-				class="records-portal"
-				id="records-section"
-				style="display: none"
-			>
+			<section class="records-portal hidden" id="recordsSection">
 				<h2>View Your Academic Records</h2>
+				<div class="records-close" onclick="closePortal('recordsSection')">
+					&times;
+				</div>
 				<form id="studentForm" class="data-entry-form">
 					<div class="form-group">
 						<label for="academicYear">Select Academic Year:</label>
@@ -43,12 +42,13 @@
 					</div>
 					<button type="submit" id="records">View Records</button>
 				</form>
-				<button id="all-records">View All Records</button>
-				<button id="current-gpa">Show current GPA</button>
 			</section>
 
-			<section class="gpa-portal" id="gpa-section" style="display: none">
+			<section class="gpa-portal hidden" id="gpaSection">
 				<h2>View Your GPA Standings</h2>
+				<div class="gpa-portal-close" onclick="closePortal('gpaSection')">
+					&times;
+				</div>
 				<form id="gpaForm" class="data-entry-form">
 					<div class="form-group">
 						<label for="gpaAcademicYear">Select Academic Year:</label>
@@ -64,8 +64,10 @@
 				</form>
 			</section>
 
-			<section id="resultsSection1" style="display: none">
-				<div class="close-section1" onclick="closeSection1()">&times;</div>
+			<section id="resultsSection1" class="hidden">
+				<div class="close-section1" onclick="closePortal('resultsSection1')">
+					&times;
+				</div>
 				<table border="1" id="tableResult">
 					<caption>
 						Your Academic Performance Summary
@@ -79,8 +81,10 @@
 					<tr></tr>
 				</table>
 			</section>
-			<section id="resultsSection2" style="display: none">
-				<div class="close-section2" onclick="closeSection2()">&times;</div>
+			<section id="resultsSection2" class="hidden">
+				<div class="close-section2" onclick="closePortal('resultsSection2')">
+					&times;
+				</div>
 				<table border="1" id="gpa-table">
 					<caption>
 						Academic Summary
@@ -94,7 +98,7 @@
 				</table>
 			</section>
 
-			<section id="responses">
+			<section id="responses" class="unhidden">
 				<span>
 					<img src="./chat-bot-icon.jpg" alt="" id="chat-icon" />
 					<div class="response-area">
@@ -110,7 +114,7 @@
 				</div>
 			</section>
 
-			<div id="chat_bot">
+			<div id="chatBot" class="hidden">
 				<img id="chat-bot" src="./chat-bot-icon.jpg" alt="Chat Bot" />
 			</div>
 		</main>
@@ -118,7 +122,9 @@
 		<footer id="contact">
 			<p>
 				Contact us at
-				<a href="mailto:support@utechjamaica.edu">support@utechjamaica.edu</a>
+				<a href="mailto:studentscalaborators@gmail.com"
+					>studentscalaborators@gmail.com</a
+				>
 			</p>
 			<p>&copy; 2024 University of Technology, Jamaica</p>
 		</footer>

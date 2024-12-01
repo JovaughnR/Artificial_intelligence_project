@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sign Up Form</title>
 		<link rel="stylesheet" href="./form.css" />
-		<script defer src="../public/scripts/form_script.js"></script>
+		<script defer src="../public/scripts/form.js"></script>
 		<script
 			src="https://kit.fontawesome.com/77487f3db9.js"
 			crossorigin="anonymous"
@@ -24,93 +24,88 @@
 		<main>
 			<section class="description">
 				<h2>Why Join Us?</h2>
-				<p id="p1"></p>
-				<p id="p2"></p>
-				<p id="p3"></p>
+				<p id="p1">
+					"Join the Academic Probation Alert System today! Our platform helps
+					students and staff stay on top of academic performance by providing
+					real-time GPA tracking, personalized alerts, and valuable
+					insights.Whether you're a student aiming for academic excellence or a
+					staff member managing academic records, this system offers tools to
+					ensure success.";
+				</p>
+				<p id="p2">
+					"Create your account now to access a seamless experience tailored to
+					your needs. Students can track their GPA, receive alerts if they fall
+					below the probation threshold, and access detailed performance
+					reports. Staff can manage student records, set probation
+					thresholds,and generate reports with ease."
+				</p>
+				<p id="p3">
+					"Sign up and take control of your academic journey today!"
+				</p>
 			</section>
 
-			<form id="uploadForm">
-				<fieldset class="field">
-					<legend>
-						<img
-							src="./icons/writing.png"
-							alt="sign-up-icon"
-							id="sign-up-icon"
-						/>
-					</legend>
-					<!-- Name and Identification -->
-					<div class="input-group">
-						<div class="inline">
-							<label for="firstName">First Name</label>
-							<input type="text" name="firstName" id="firstName" required />
-						</div>
-						<div class="inline">
-							<label for="lastName">Last Name</label>
-							<input type="text" name="lastName" id="lastName" required />
-						</div>
-					</div>
+			<form class="data-entry-form" id="verifactionForm">
+				<h2>Verifcation</h2>
+				<div>
+					<p class="verification">
+						To access the system, you must first verify your identification
+						number. This ID number is either provided to you via email or
+						directly by a staff member. Once your ID verification is complete,
+						you will be guided to the next step, where you can create a secure
+						password to finalize your account setup.
+					</p>
+				</div>
+				<div class="form-group">
+					<label for="verifactionID">Identification Number</label>
+					<input
+						type="text"
+						name="verificationID"
+						id="verifactionID"
+						required
+					/>
+				</div>
+				<div class="form-group">
+					<label for="email">Email (Optional)</label>
+					<input type="email" name="email" id="email" />
+				</div>
+				<button type="submit" id="submitBtn">Verify Identification</button>
+			</form>
 
-					<div class="input-group">
-						<div class="inline">
-							<label for="userID">Identification Number</label>
-							<input type="text" name="userID" id="userID" required />
-						</div>
-						<div class="inline">
-							<label for="email">Email</label>
-							<input type="email" name="email" id="email" required />
-						</div>
-					</div>
-
-					<!-- Account Type -->
-					<div class="input-group">
-						<label for="account_type">Account Type</label>
-						<select name="account_type" id="account_type" required>
-							<option value="student">Student</option>
-							<option value="staff">Staff</option>
-						</select>
-					</div>
-
-					<!-- Conditional Fields -->
-					<div id="student-fields">
-						<div class="input-group">
-							<label for="programme">Programme</label>
-							<input type="text" name="programme" id="programme" required />
-						</div>
-					</div>
-					<div class="input-group" id="staff-fields" style="display: none">
-						<label for="staff_type">Staff Type</label>
-						<input type="text" name="staff_type" id="staff_type" />
-						<label for="school">School</label>
-						<input type="text" name="school" id="school" />
-					</div>
-
-					<!-- Password -->
-					<div class="input-group">
-						<div class="inline">
-							<label for="password">Password</label>
-							<input type="password" name="password" id="password" required />
-						</div>
-						<div class="inline">
-							<label for="confirm_password">Confirm Password</label>
-							<input
-								type="password"
-								name="confirm_password"
-								id="confirm_password"
-								required
-							/>
-						</div>
-					</div>
-					<div id="error-message" class="error-message">
-						Passwords don't match.
-					</div>
-					<button type="submit" id="submitBtn">Create Account</button>
-				</fieldset>
+			<form class="data-entry-form" id="uploadForm" style="display: none">
+				<h2>Verifcation</h2>
+				<div>
+					<p class="verification">
+						Your ID verification is complete! Proceed to set up your password to
+						secure your account. Create a strong password to finalize your
+						registration and unlock full access to the system. Let’s ensure your
+						account stays protected!
+					</p>
+				</div>
+				<!-- Password -->
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" name="password" id="password" required />
+				</div>
+				<div class="form-group">
+					<label for="confirm_password">Confirm Password</label>
+					<input
+						type="password"
+						name="confirm_password"
+						id="confirm_password"
+						required
+					/>
+				</div>
+				<button type="submit" id="submitBtn">Create Account</button>
 			</form>
 		</main>
+		<div class="error-message hidden" id="error">This is a error</div>
+		<div class="ok-message hidden" id="ok">This is ok</div>
 		<footer id="contact">
 			<p>
 				Contact us at
-				<a href="mailto:support@utechjamaica.edu">support@utechjamaica.edu</a>
+				<a href="mailto:studentscalaborators@gmail.com"
+					>studentscalaborators@gmail.com</a
+				>
 			</p>
 			<p>&copy; 2024 University of Technology, Jamaica</p>
 		</footer>

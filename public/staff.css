@@ -1,4 +1,10 @@
 /* General Styles */
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f8f9fa;
@@ -18,7 +24,7 @@ input {
 
 /* Header */
 header {
-	background: #007bff;
+	background-color: #004aad;
 	color: #fff;
 	padding: 1rem;
 	text-align: center;
@@ -123,30 +129,45 @@ h2 {
 #admin,
 #registerStudent,
 #addModuleDetails,
-#gpaThreshold {
+#endSemester {
 	background-color: transparent;
 	position: relative;
-	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding: 20px;
-	width: 600px;
+	width: 640px;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 	height: 400px;
 }
 
-/* .form-group {
-	margin-bottom: 1rem;
-	display: flex;
+#results {
+	position: relative;
+	background-color: transparent;
 	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 650px;
+	/* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+	min-height: 400px;
+}
+.hidden {
+	display: none;
 }
 
-.form-group label {
-	margin-bottom: 8px;
-	font-weight: bold;
-	color: #333;
-} */
+.visible {
+	display: flex;
+}
+
+#gpaThreshold {
+	/* display: flex; */
+	flex-direction: column;
+	align-items: center;
+	width: 600px;
+	height: 400px;
+	gap: 30px;
+	padding: 20px;
+}
 
 .form-group {
 	display: flex;
@@ -195,14 +216,13 @@ h2 {
 /* Container Styling */
 .gpa-threshold-portal {
 	max-width: 600px;
-	/* margin: 2rem auto; */
 	padding: 2rem;
 	background-color: #ffffff;
 	border-radius: 10px;
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 	position: relative;
 	text-align: center;
-	display: none; /* Hidden by default */
+	/* display: none; */
 }
 
 /* Close Button Styling */
@@ -221,14 +241,6 @@ h2 {
 	color: #c00000; /* Darker red on hover */
 }
 
-/* Form Styling */
-#thresholdForm {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-/* Heading Styling */
 .gpa-threshold-portal h2 {
 	color: #007bff; /* Theme color */
 	margin-bottom: 1.5rem;
@@ -250,19 +262,6 @@ h2 {
 	font-size: 1rem;
 	text-align: center;
 	box-sizing: border-box;
-}
-
-/* Button Styling */
-#gpa-threshold {
-	background-color: #007bff;
-	color: white;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	font-weight: bold;
-	/* transition: background-color 0.3s, transform 0.2s; */
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #gpa-threshold:hover {
@@ -289,7 +288,8 @@ h2 {
 }
 
 /* Button Styling */
-button[type="submit"] {
+button[type="submit"],
+button[type="button"] {
 	background-color: #007bff;
 	color: white;
 	padding: 12px 20px;
@@ -309,7 +309,8 @@ button[type="submit"]:hover {
 .admin-close,
 .register-close,
 .module-portal-close,
-.gpa-threshold-close {
+.gpa-threshold-close,
+.end-semester-close {
 	position: absolute;
 	top: 10px;
 	right: 15px;
@@ -322,17 +323,39 @@ button[type="submit"]:hover {
 
 .close-section:hover,
 .admin-close:hover,
-.module-portal-close:hover {
+.module-portal-close:hover,
+.end-semester-close:hover {
 	color: #c00000;
 }
 
+.result-close {
+	position: absolute;
+	color: #ff0000;
+	top: 0;
+	right: 15px;
+	font-weight: bold;
+	font-size: 24px;
+	cursor: pointer;
+}
+
+.result-close:hover {
+	color: #c00000;
+	cursor: pointer;
+}
 /* Table */
 table {
+	position: absolute;
 	width: 100%;
-	max-width: 800px; /* Adjust based on the container's width */
-	margin: 20px 0; /* Proper vertical spacing */
-	border-collapse: collapse; /* Remove gaps between borders */
+	top: 24px;
+	border-collapse: collapse;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table caption {
+	margin-bottom: 10px; /* Space below caption */
+	font-weight: bold; /* Make caption stand out */
+	font-size: 1.2em; /* Increase caption size */
+	color: #007bff; /* Subtle color for the caption */
 }
 
 th,
@@ -352,7 +375,7 @@ th {
 tr:nth-child(even) {
 	font-weight: 700;
 	color: #333;
-	background-color: #f9f9f9; /* Alternating row colors */
+	background-color: #ee5858; /* Alternating row colors*/
 }
 
 tr:hover {
@@ -394,13 +417,6 @@ th {
 	tr {
 		border-bottom: 1px solid #ccc; /* Add border between stacked rows */
 	}
-}
-
-table caption {
-	margin-bottom: 10px; /* Space below caption */
-	font-weight: bold; /* Make caption stand out */
-	font-size: 1.2em; /* Increase caption size */
-	color: #007bff; /* Subtle color for the caption */
 }
 
 /* Chat Bot */
@@ -452,6 +468,10 @@ table caption {
 	margin-top: 15px;
 }
 
+#p1 {
+	padding-left: 50px;
+}
+
 .user-response-area {
 	display: flex;
 	align-items: center;
@@ -500,15 +520,16 @@ table caption {
 
 /* Footer */
 footer {
-	background: #343a40;
-	color: white;
+	background-color: #004aad;
+	color: #fff;
 	text-align: center;
 	padding: 1rem 0;
+	width: 100%;
 	margin-top: auto;
 }
 
 footer a {
-	color: #007bff;
+	color: #f1c40f;
 	text-decoration: none;
 }
 

@@ -1,0 +1,135 @@
+{
+	"intents": [
+		{
+			"tag": "greeting",
+			"patterns": ["Hi", "Hello", "Hey", "Good morning", "Good evening"],
+			"responses": [
+				"Hello! How can I assist you with your academic records today?",
+				"Hi there! What do you need help with?",
+				"Greetings! Let me know how I can help you today."
+			]
+		},
+		{
+			"tag": "farewell",
+			"patterns": ["Bye", "Goodbye", "See you", "I am done", "End chat"],
+			"responses": [
+				"Goodbye! Feel free to return if you need further assistance.",
+				"Take care! Let me know if you need help again.",
+				"See you next time! Have a great day."
+			]
+		},
+		{
+			"tag": "contact_support",
+			"patterns": [
+				"How can I contact support?",
+				"I need help",
+				"Contact support team",
+				"Who can help with my records?",
+				"Support email",
+				"How do I report an issue with the dashboard?"
+			],
+			"responses": [
+				"You can contact support at support@utechjamaica.edu.",
+				"For issues with records, reach out to your academic advisor or technical support.",
+				"To report an issue, send a detailed email to support@utechjamaica.edu or visit the university's support portal."
+			]
+		},
+		{
+			"tag": "module_records",
+			"patterns": [
+				"Show my module records",
+				"Where are my module records?",
+				"Display modules and grades",
+				"I want to see my module performance"
+			],
+			"responses": [
+				"Module records are displayed under the 'Module Records' section after you select an academic year and click 'View Records'.",
+				"To view module performance, choose the desired academic year and access the Module Records section."
+			]
+		},
+		{
+			"tag": "chatbot_help",
+			"patterns": [
+				"What can you do?",
+				"Help me with the system",
+				"How do I use the chatbot?",
+				"What are your features?",
+				"Can the chatbot help with academic records?"
+			],
+			"responses": [
+				"I can guide you through the system, help you view academic records, check your GPA and academic status, access module records, and provide support contact information.",
+				"The chatbot can assist you with questions about GPA, academic status, and how to navigate the portal.",
+				"Type your query in the input box and I'll assist you!"
+			]
+		},
+		{
+			"tag": "technical_issues",
+			"patterns": [
+				"What should I do if the dashboard doesn’t load?",
+				"How do I fix login errors?",
+				"What should I do if the GPA isn’t updating?",
+				"Who do I contact for technical issues?"
+			],
+			"responses": [
+				"If the dashboard doesn’t load, try refreshing your browser or clearing the cache.",
+				"For login errors, ensure your credentials are correct or reset your password.",
+				"Contact technical support for issues like GPA not updating or login errors."
+			]
+		},
+		{
+			"tag": "logout",
+			"patterns": [
+				"How do I sign out safely?",
+				"Is there a log out button?",
+				"Sign me out of my account.",
+				"How do I log out",
+				"Can you sign me out"
+			],
+			"responses": [
+				"To log out, click the 'Logout' button in the top right corner of the dashboard. This will securely sign you out of your account.",
+				"Always remember to log out after using the portal to protect your information."
+			]
+		},
+		{
+			"tag": "retrieve_records",
+			"patterns": [
+				"How can I retrieve student records?",
+				"How do I view student records?",
+				"Retrieve records for student with ID {studentID}",
+				"Show records for student ID {studentID}",
+				"Can I view student records for 2023?"
+			],
+			"responses": [
+				"To retrieve student records, go to the 'Retrieve Records' section, enter the student ID, and select the academic year.",
+				"You can view records for a specific student by entering the student ID and academic year in the 'Retrieve Records' section."
+			]
+		},
+		{
+			"tag": "register_student",
+			"patterns": [
+				"How do I register a new student?",
+				"Register a new student with ID {studentID}",
+				"I want to add a new student",
+				"How do I sign up a student?",
+				"What are the steps to register a student?"
+			],
+			"responses": [
+				"To register a new student, go to the 'Register Student' section, fill in the required details like first name, last name, and student ID.",
+				"Fill in the student's information under the 'Register Student' section, including their email and programme."
+			]
+		},
+		{
+			"tag": "add_module_details",
+			"patterns": [
+				"How do I add module details?",
+				"Add module details for student ID {studentID}",
+				"Enter module details for student {studentID}",
+				"Add a module for student {studentID}"
+			],
+			"responses": [
+				"To add module details, go to the 'Add Module Details' section and fill in the student's module information, including the module code and grade points.",
+				"Provide the student's ID, module code, and grade points in the 'Add Module Details' section to add a new module record."
+			]
+		}
+	]
+}
