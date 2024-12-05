@@ -1,5 +1,5 @@
 %-------- Facts -----------
-default_gpa(3.5).
+default_gpa(2.4).
 
 
 % ------ Facts for grade points

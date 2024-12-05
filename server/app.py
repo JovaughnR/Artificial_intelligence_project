@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, send_from_directory
 from database import Database, hash_string
 import person as user
 from flask_cors import CORS
@@ -9,16 +9,20 @@ from Emailer import Emailing
 from predictor import predict
 
 # Setup Flask app and CORS
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../public', static_url_path='/')
 CORS(app, supports_credentials=True)
 
 # Load environment variables from .env file
 load_dotenv()
 # Database setup
-db_url = os.getenv("DATABASE_URL")
-db = Database.from_url(db_url) if db_url else Database(
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://localhost/ai_project')
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# db = SQLAlchemy(app)
+db = Database(
     host="localhost",
-    user="root",
+    user="jovaughn",
     password="",
     database="ai_project"
 )
@@ -47,13 +51,17 @@ def handle_error(message, status_code=400):
     return jsonify({"error": message}), status_code
 
 # Routes
+
+@app.route('/<path:filename>')
+def serve_static_files(filename):
+    return send_from_directory(app.static_folder, filename)
+
 @app.route('/login', methods=["POST"])
 def authenticate_user():
     data = request.get_json()
     usrID, passwd = data.get("userID"), data.get("password")
 
     status = db.is_user_registered(usrID, passwd)
-    print("Status: ", status)
     if status:
         usrKey = unique_key(f"{SECRET_KEY}{usrID}{passwd}")
         sessions[usrKey] = usrID
@@ -88,25 +96,26 @@ def authorise_user():
 @app.route('/register', methods=["POST"])
 def sign_up_user():
     data = request.get_json()
-    user_info = [data.get('id'), data.get('fName'), data.get('lName'), data.get('email')]
-    mail.send_account_creation_email(user_info[3], user_info[1], user_info[0])
+    user_info = [data.get('id'), data.get('fname'), data.get('lname'), data.get('email')]
     if data.get('type') == 'student':
         user_info.append(data.get('programme'))
         status = db.create_student(user.Student(*user_info))
     elif data.get('type') == 'staff':
         status = db.create_staff(user.Staff(*user_info))
 
+    mail.send_account_creation_email(user_info[3], user_info[1], user_info[0])
     return jsonify({"status": True if status else False}), 200 if status else 409
 
 
 @app.route('/', methods=["GET"])
 def home():
     sessionKey = request.cookies.get("secret_key")
-    if sessionKey in sessions:
+    if sessionKey and sessionKey in sessions:
         client = db.get_user_byID(sessions[sessionKey])
         full_name = f"{client[1]} {client[2]}" if client else "Administrator"
         return jsonify({"name": full_name}), 200
-    return jsonify({"path": "login.html"}), 401
+    # Return a JSON error instead of serving an HTML page
+    return send_from_directory('../public', 'index.html'), 401
 
 @app.route('/logout', methods=["GET"])
 def logout():
@@ -126,7 +135,6 @@ def get_student_records():
     elif request.method == 'POST':
         year = request.get_json().get('year')
         records = db.get_records_by_year(ID, year)
-        print("Records from server:", records)
 
     return jsonify({"records": records if records else "No records found"}), 200 if records else 401
 
@@ -228,9 +236,6 @@ def add_module_details():
     # Insert the grade information into the database
     status = db.insert_grade(module_code, module_name, student_id, year, semester, gradepoint)
 
-    # Log the status for debugging purposes
-    print("Insertion status:", status)
-
     # Return a success response if insertion was successful, otherwise an error response
     if status:
         return jsonify({"status": "success"}), 200
@@ -242,7 +247,7 @@ def get_default_gpa():
     Endpoint to retrieve the default GPA threshold.
     """
     gpa = pl.get_default_gpa()
-    if gpa is not None:
+    if gpa is not None: 
         return jsonify({"GPA": gpa}), 200
     return jsonify({"error": "Failed to retrieve GPA"}), 500
 
@@ -273,26 +278,17 @@ def generate_alerts():
     if not db.is_user_registered(user_id, data.get("pass")):
         return handle_error("Invalid credentials", 401)
     
-    print("User verified")
-    
     # Send alert emails to students
     year = data.get("year")
     if not year:
         return handle_error("Year is required", 400)
-    
-    print("year verified")
 
     students = get_students_info(year)
     if not students:
         return handle_error("No students found for the specified year", 404)
-    
-    print("students", students)
 
     for student in students:
-        print("Sending mail")
-        print("sending mail student:", student[0])
-        print("Student gpa:", student[1])
-        # mail.send_alert_email(*student)  # Assuming send_alert_email(name, GPA, program, email)
+        mail.send_alert_email(*student) 
     
     return jsonify({"status": "Alerts sent successfully"}), 200
 
@@ -327,4 +323,4 @@ def bot9():
     return handle_error("Not Authorized", 401)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3001)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8000)), debug=True)
