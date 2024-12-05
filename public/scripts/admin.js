@@ -1,5 +1,4 @@
-const port = 3001;
-const host = `http://127.0.0.1:${port}`;
+const host = `http://192.168.100.219:8000`;
 
 // DOM Elements
 const staffAccountLink = document.getElementById("staffAccount");
@@ -69,7 +68,7 @@ addModulesLink.addEventListener("click", toggleModuleSection);
 			const data = await response.json();
 			userName.innerHTML = data.name;
 		} else if (response.status === 401) {
-			window.location.replace("/public/login.html");
+			window.location.replace("/login.html");
 		}
 	} catch (error) {
 		console.error("Error fetching user details:", error);
@@ -85,7 +84,7 @@ async function signOut() {
 			credentials: "include",
 		});
 		if (response.ok) {
-			window.location.replace("/public/login.html");
+			window.location.replace("/login.html");
 		} else {
 			showNotification("Failed to log out. Please try again.", "error");
 		}

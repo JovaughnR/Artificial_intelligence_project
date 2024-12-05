@@ -1,5 +1,5 @@
 let userID = null;
-const host = "http://127.0.0.1:3001";
+const host = "http://192.168.100.219:8000";
 
 // Form references
 const forms = {
@@ -69,11 +69,11 @@ async function authenticateUser(event) {
 		if (response.ok) {
 			const data = await response.json();
 			const redirectMap = {
-				student: "/public/student.html",
-				staff: "/public/staff.html",
-				admin: "/public/admin.html",
+				student: "/student.html",
+				staff: "/staff.html",
+				admin: "/admin.html",
 			};
-			window.location.href = redirectMap[data["type"]] || "/public/login.html";
+			window.location.href = redirectMap[data["type"]] || "/login.html";
 		} else {
 			showError("Incorrect user ID or password");
 		}

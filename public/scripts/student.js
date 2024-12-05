@@ -1,7 +1,4 @@
-console.log("Script running");
-
-const port = 3001;
-const host = `http://127.0.0.1:${port}`;
+const host = `http://192.168.100.219:8000`;
 
 // Utility function to get an element by ID
 const lookup = (id) => document.getElementById(id);
@@ -194,7 +191,7 @@ async function logoutUser() {
 		});
 
 		if (res.ok) {
-			window.location.replace("/public/login.html");
+			window.location.replace("/login.html");
 		} else {
 			throw new Error("Logout failed");
 		}
@@ -292,7 +289,7 @@ function systemError(message) {
 			const { name } = await response.json();
 			lookup("studentName").textContent = name;
 		} else if (response.status === 401) {
-			window.location.replace("/public/login.html");
+			window.location.replace("/login.html");
 		}
 	} catch (error) {
 		systemError(error.message || "Initialization failed");

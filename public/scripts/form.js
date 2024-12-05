@@ -1,4 +1,4 @@
-const host = "http://127.0.0.1:3001";
+const host = "http://192.168.100.219:8000";
 
 const lookup = (id) => document.getElementById(id);
 
@@ -56,7 +56,7 @@ async function saveUser(event) {
 
 		if (res.ok) {
 			showOk("Your account was created successfully");
-			window.location.href = "/public/login.html";
+			window.location.href = "/login.html";
 		} else {
 			const error = await res.json();
 			showError("Failed to create account. Try again.");

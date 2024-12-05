@@ -1,3 +1,5 @@
+const host = `http://192.168.100.219:8000`;
+
 // Utility for element lookup
 const lookup = (id) => document.getElementById(id);
 
@@ -40,13 +42,6 @@ function closePortal(section) {
 	sections[section].classList.add("hidden");
 	sections[section].classList.remove("visible");
 }
-
-// Constants
-const port = 3001;
-const host = `http://127.0.0.1:${port}`;
-
-// Logging
-console.log("Staff Script running");
 
 // Event Listeners
 logoutButton.addEventListener("click", signOut);
@@ -111,7 +106,7 @@ function toggleChat(showChat) {
 			const data = await response.json();
 			userName.innerHTML = data["name"];
 		} else if (response.status === 401) {
-			window.location.replace("/public/login.html");
+			window.location.replace("/login.html");
 		}
 	} catch (error) {
 		console.error("Error fetching user details:", error);
@@ -339,7 +334,7 @@ async function signOut() {
 		});
 
 		if (response.ok) {
-			window.location.replace("/public/login.html");
+			window.location.replace("/login.html");
 		} else {
 			systemError("Logout failed.");
 		}
